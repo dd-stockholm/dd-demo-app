@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('dd-demo-app')
-    .factory('PartiesService', function() {
+    .factory('PartiesService', ['$q', function($q) {
         var service = {
-
             list: function() {
-                return ['c', 'l', 'kd', 'm', 'mp', 's', 'sd', 'v'];
+                return $q(function(resolve, reject) {
+                    resolve(['c', 'l', 'kd', 'm', 'mp', 's', 'sd', 'v']);
+                });
             }
-
         };
 
         return service;
-    });
+    }]);
