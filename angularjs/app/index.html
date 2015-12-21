@@ -9,129 +9,163 @@
     <script src="js/underscore-min.js"></script>
     <script src="app.js"></script>
     <script src="controllers/parties-controller.js"></script>
+    <script src="controllers/tabs-controller.js"></script>
     <script src="services/parties-service.js"></script>
 </head>
 <body>
 
 <a href="index.html"><img src="assets/images/logo.png" id="logo"></a>
-<div id="wrapper" ng-controller="PartiesController">
+<div>
+  <div id="tabs" ng-controller="TabsCtrl">
+    <ul>
+      <li ng-repeat="tab in tabs"><a href="{{tab.url}}">{{tab.title}}</a></li>
+    </ul>
+    <div ng-view></div>
+  </div>
+</div>
 
-    <div>
-        {{ parties }}
-    </div>
+  <!-- <script type="text/ng-template" id="one.tpl.html">
+  <div id="viewOne">
+    <h1>View One</h1>
+    <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc.</p>
+  </div>
+  </script>
+  
+  <script type="text/ng-template" id="two.tpl.html">
+		<div id="viewTwo">
+			<h1>View Two</h1>
+			<p>Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
+		</div>
+	</script>
+	
+	<script type="text/ng-template" id="three.tpl.html">
+		<div id="viewThree">
+			<h1>View Three</h1>
+			<p>In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
+		</div>
+	</script> -->
 
-    <ul id="tabs">
+
+
+<!--      <ul id="tabs">
         <li><a href="#about">Partier</a></li>
         <li><a href="#advantages">Om Direktdemokraterna</a></li>
         <li><a href="#usage">Placeholder</a></li>
-    </ul>
+    </ul> 
+ -->
 
-    <!--<div class="tabContent" id="about">-->
-        <!--<h2>Välj ett parti</h2>-->
-        <!--<form method="post" action="index.php">-->
-            <!--<table style="width:10%">-->
-                <!--<tr>-->
-                    <!--<td>-->
-                        <!--<label>-->
-                            <!--<input type="radio" name="parti" value="1"/>-->
-                            <!--<a href="c.php">-->
-                                <!--<img src="parti1.png" align="center" >-->
-                            <!--</a>-->
-                        <!--</label>-->
-                        <!--<p>C</p>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--<label>-->
-                            <!--<input type="radio" name="parti" value="2"/>-->
-                            <!--<a href="fp.php">-->
-                                <!--<img src="parti2.png" align="center">-->
-                            <!--</a>-->
-                        <!--</label>-->
-                        <!--<p>FP</p>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td>-->
-                        <!--<label>-->
-                            <!--<input type="radio" name="parti" value="3"/>-->
-                            <!--<a href="kd.php">-->
-                                <!--<img src="parti3.png">-->
-                            <!--</a>-->
-                        <!--</label>-->
-                        <!--<p>KD</p>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--<label>-->
-                            <!--<input type="radio" name="parti" value="4"/>-->
-                            <!--<a href="m.php">-->
-                                <!--<img src="parti4.png">-->
-                            <!--</a>-->
-                        <!--</label>-->
-                        <!--<p>M</p>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td>-->
-                        <!--<label>-->
-                            <!--<input type="radio" name="parti" value="5"/>-->
-                            <!--<a href="mp.php">-->
-                                <!--<img src="parti5.png">-->
-                            <!--</a>-->
-                        <!--</label>-->
-                        <!--<p>MP</p>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--<label>-->
-                            <!--<input type="radio" name="parti" value="6"/>-->
-                            <!--<a href="s.php">-->
-                                <!--<img src="parti6.png">-->
-                            <!--</a>-->
-                        <!--</label>-->
-                        <!--<p>S</p>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td>-->
-                        <!--<label>-->
-                            <!--<input type="radio" name="parti" value="7"/>-->
-                            <!--<a href="sd.php">-->
-                                <!--<img src="parti7.png">-->
-                            <!--</a>-->
-                        <!--</label>-->
-                        <!--<p>SD</p>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--<label>-->
-                            <!--<input type="radio" name="parti" value="8"/>-->
-                            <!--<a href="v.php">-->
-                                <!--<img src="parti8.png">-->
-                            <!--</a>-->
-                        <!--</label>-->
-                        <!--<p>V</p>-->
-                    <!--</td>-->
-                <!--</tr>-->
-            <!--</table>-->
-        <!--</form>-->
-    <!--</div>-->
 
-    <!--<div class="tabContent" id="advantages">-->
-        <!--<h2>Direktdemokraterna</h2>-->
-        <!--<div>-->
-            <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt fermentum elit, vel rhoncus sapien. Pellentesque ornare justo sit amet sapien ornare porttitor. Cras venenatis libero placerat lectus blandit, sed laoreet ex elementum. In hac habitasse platea dictumst. Integer nec dapibus justo, id elementum libero. Aliquam at semper elit, quis maximus elit. Integer euismod, neque sit amet congue elementum, velit neque sollicitudin odio, sit amet viverra magna tortor vel justo. Mauris leo nisl, varius vitae purus vel, consectetur semper nisi. Donec facilisis augue vel turpis tempor, id bibendum nunc pulvinar. Vestibulum lacinia, neque sed sagittis gravida, nibh orci venenatis eros, et iaculis lectus nunc eget tellus. In hac habitasse platea dictumst. Mauris eu commodo eros.</p>-->
 
-            <!--<p>Pellentesque sed lorem eu odio venenatis sollicitudin iaculis id massa. Duis faucibus dolor eu tempor euismod. Suspendisse potenti. Duis lacinia magna vel malesuada dignissim. Sed vehicula pellentesque cursus. Proin blandit nisl feugiat quam imperdiet laoreet. Vestibulum iaculis libero dolor, a consectetur enim volutpat id. Phasellus scelerisque condimentum sem quis pharetra. Nullam a diam efficitur, cursus mi et, rutrum dolor. Morbi ut quam dui. Morbi congue ullamcorper mattis. Cras sit amet ipsum accumsan, blandit risus nec, gravida purus. Sed rhoncus imperdiet mi porta venenatis. Nulla non efficitur eros. Vivamus dignissim nulla nec placerat consectetur. Maecenas et mi volutpat, sagittis dui eget, auctor lacus.</p>-->
-        <!--</div>-->
-    <!--</div>-->
 
-    <!--<div class="tabContent" id="usage">-->
-        <!--<h2>Placeholder</h2>-->
-        <!--<div>-->
-            <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt fermentum elit, vel rhoncus sapien. Pellentesque ornare justo sit amet sapien ornare porttitor. Cras venenatis libero placerat lectus blandit, sed laoreet ex elementum. In hac habitasse platea dictumst. Integer nec dapibus justo, id elementum libero. Aliquam at semper elit, quis maximus elit. Integer euismod, neque sit amet congue elementum, velit neque sollicitudin odio, sit amet viverra magna tortor vel justo. Mauris leo nisl, varius vitae purus vel, consectetur semper nisi. Donec facilisis augue vel turpis tempor, id bibendum nunc pulvinar. Vestibulum lacinia, neque sed sagittis gravida, nibh orci venenatis eros, et iaculis lectus nunc eget tellus. In hac habitasse platea dictumst. Mauris eu commodo eros.</p>-->
+    
 
-            <!--<p>Pellentesque sed lorem eu odio venenatis sollicitudin iaculis id massa. Duis faucibus dolor eu tempor euismod. Suspendisse potenti. Duis lacinia magna vel malesuada dignissim. Sed vehicula pellentesque cursus. Proin blandit nisl feugiat quam imperdiet laoreet. Vestibulum iaculis libero dolor, a consectetur enim volutpat id. Phasellus scelerisque condimentum sem quis pharetra. Nullam a diam efficitur, cursus mi et, rutrum dolor. Morbi ut quam dui. Morbi congue ullamcorper mattis. Cras sit amet ipsum accumsan, blandit risus nec, gravida purus. Sed rhoncus imperdiet mi porta venenatis. Nulla non efficitur eros. Vivamus dignissim nulla nec placerat consectetur. Maecenas et mi volutpat, sagittis dui eget, auctor lacus.</p>-->
-        <!--</div>-->
-    <!--</div>-->
+    
+<!--     <div class="tabContent" id="about">
+        <h2>Välj ett parti</h2>
+        <form method="post" action="index.php">
+            <table style="width:10%">
+                <tr>
+                    <td>
+                        <label>
+                            <input type="radio" name="parti" value="1"/>
+                            <a href="c.php">
+                                <img src="parti1.png" align="center" >
+                            </a>
+                        </label>
+                        <p>C</p>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="radio" name="parti" value="2"/>
+                            <a href="fp.php">
+                                <img src="parti2.png" align="center">
+                            </a>
+                        </label>
+                        <p>FP</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>
+                            <input type="radio" name="parti" value="3"/>
+                            <a href="kd.php">
+                                <img src="parti3.png">
+                            </a>
+                        </label>
+                        <p>KD</p>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="radio" name="parti" value="4"/>
+                            <a href="m.php">
+                                <img src="parti4.png">
+                            </a>
+                        </label>
+                        <p>M</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>
+                            <input type="radio" name="parti" value="5"/>
+                            <a href="mp.php">
+                                <img src="parti5.png">
+                            </a>
+                        </label>
+                        <p>MP</p>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="radio" name="parti" value="6"/>
+                            <a href="s.php">
+                                <img src="parti6.png">
+                            </a>
+                        </label>
+                        <p>S</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>
+                            <input type="radio" name="parti" value="7"/>
+                            <a href="sd.php">
+                                <img src="parti7.png">
+                            </a>
+                        </label>
+                        <p>SD</p>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="radio" name="parti" value="8"/>
+                            <a href="v.php">
+                                <img src="parti8.png">
+                            </a>
+                        </label>
+                        <p>V</p>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+ </div> -->
+<!--     <div class="tabContent" id="advantages">
+        <h2>Direktdemokraterna</h2>
+        <div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt fermentum elit, vel rhoncus sapien. Pellentesque ornare justo sit amet sapien ornare porttitor. Cras venenatis libero placerat lectus blandit, sed laoreet ex elementum. In hac habitasse platea dictumst. Integer nec dapibus justo, id elementum libero. Aliquam at semper elit, quis maximus elit. Integer euismod, neque sit amet congue elementum, velit neque sollicitudin odio, sit amet viverra magna tortor vel justo. Mauris leo nisl, varius vitae purus vel, consectetur semper nisi. Donec facilisis augue vel turpis tempor, id bibendum nunc pulvinar. Vestibulum lacinia, neque sed sagittis gravida, nibh orci venenatis eros, et iaculis lectus nunc eget tellus. In hac habitasse platea dictumst. Mauris eu commodo eros.</p>
 
-</div>
+            <p>Pellentesque sed lorem eu odio venenatis sollicitudin iaculis id massa. Duis faucibus dolor eu tempor euismod. Suspendisse potenti. Duis lacinia magna vel malesuada dignissim. Sed vehicula pellentesque cursus. Proin blandit nisl feugiat quam imperdiet laoreet. Vestibulum iaculis libero dolor, a consectetur enim volutpat id. Phasellus scelerisque condimentum sem quis pharetra. Nullam a diam efficitur, cursus mi et, rutrum dolor. Morbi ut quam dui. Morbi congue ullamcorper mattis. Cras sit amet ipsum accumsan, blandit risus nec, gravida purus. Sed rhoncus imperdiet mi porta venenatis. Nulla non efficitur eros. Vivamus dignissim nulla nec placerat consectetur. Maecenas et mi volutpat, sagittis dui eget, auctor lacus.</p>
+        </div>
+    </div>
+
+    <div class="tabContent" id="usage">
+        <h2>Placeholder</h2>
+        <div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt fermentum elit, vel rhoncus sapien. Pellentesque ornare justo sit amet sapien ornare porttitor. Cras venenatis libero placerat lectus blandit, sed laoreet ex elementum. In hac habitasse platea dictumst. Integer nec dapibus justo, id elementum libero. Aliquam at semper elit, quis maximus elit. Integer euismod, neque sit amet congue elementum, velit neque sollicitudin odio, sit amet viverra magna tortor vel justo. Mauris leo nisl, varius vitae purus vel, consectetur semper nisi. Donec facilisis augue vel turpis tempor, id bibendum nunc pulvinar. Vestibulum lacinia, neque sed sagittis gravida, nibh orci venenatis eros, et iaculis lectus nunc eget tellus. In hac habitasse platea dictumst. Mauris eu commodo eros.</p>
+
+            <p>Pellentesque sed lorem eu odio venenatis sollicitudin iaculis id massa. Duis faucibus dolor eu tempor euismod. Suspendisse potenti. Duis lacinia magna vel malesuada dignissim. Sed vehicula pellentesque cursus. Proin blandit nisl feugiat quam imperdiet laoreet. Vestibulum iaculis libero dolor, a consectetur enim volutpat id. Phasellus scelerisque condimentum sem quis pharetra. Nullam a diam efficitur, cursus mi et, rutrum dolor. Morbi ut quam dui. Morbi congue ullamcorper mattis. Cras sit amet ipsum accumsan, blandit risus nec, gravida purus. Sed rhoncus imperdiet mi porta venenatis. Nulla non efficitur eros. Vivamus dignissim nulla nec placerat consectetur. Maecenas et mi volutpat, sagittis dui eget, auctor lacus.</p>
+        </div>
+    </div> -->
+
+  
 </body>
 </html>
