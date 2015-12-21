@@ -1,15 +1,12 @@
 
-apply plugin: 'java'
-apply plugin: 'application'
-
-repositories {
-    jcenter()
+plugins {
+    id 'java'
+    id 'application'
 }
 
-mainClassName = 'HelloWorld'
-
-compileJava {
-  sourceCompatibility = '1.8'
+repositories {
+    mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
@@ -17,3 +14,11 @@ dependencies {
     compile 'com.sparkjava:spark-core:2.3'
     testCompile 'junit:junit:4.12'
 }
+
+version = '0.1.0'
+mainClassName = 'HelloWorld'
+
+compileJava {
+  sourceCompatibility = '1.8'
+}
+
