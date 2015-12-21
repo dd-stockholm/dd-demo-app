@@ -4,3 +4,5 @@
 *.iml
 Thumbs.db
 .gradle/
+/.nb-gradle/
+/build/
