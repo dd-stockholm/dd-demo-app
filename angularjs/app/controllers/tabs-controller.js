@@ -5,5 +5,8 @@ angular.module('dd-demo-app')
       $scope.tabs = [{
         title: 'Partier',
         url: '#/parties'
-      }]
+        }, {
+          title:'Frågor',
+          url: '#/questions'
+        }]
     }]);

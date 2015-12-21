@@ -10,6 +10,10 @@ var ddDemoApp = angular.module('dd-demo-app', [
       templateUrl: 'partials/parties.html',
       controller: 'PartiesController'
     }).
+    when('/questions', {
+      templateUrl: 'partials/questions.html',
+      controller: 'QuestionController'
+    }).
     otherwise({
       redirectTo: 'index.html'
     });
