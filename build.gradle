@@ -9,16 +9,25 @@ repositories {
     mavenCentral()
 }
 
+project.ext {
+    dropwizardVersion = "0.9.1"
+}
+
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.12'
-    compile 'com.sparkjava:spark-core:2.3'
-    testCompile 'junit:junit:4.12'
+    compile "org.slf4j:slf4j-api:1.7.12"
+    compile "io.dropwizard:dropwizard-core:$dropwizardVersion"
+    compile "io.dropwizard:dropwizard-assets:$dropwizardVersion"
+    testCompile "junit:junit:4.12"
 }
 
 version = '0.1.0'
-mainClassName = 'HelloWorld'
+mainClassName = 'org.dd.demoapp.App'
 
 compileJava {
   sourceCompatibility = '1.8'
+}
+
+run {
+    args 'server', 'app-config.yml'
 }
 
