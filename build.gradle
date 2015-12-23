@@ -2,6 +2,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.2'
 }
 
 repositories {
@@ -25,6 +26,11 @@ mainClassName = 'org.dd.demoapp.App'
 
 compileJava {
   sourceCompatibility = '1.8'
+}
+
+shadowJar {
+    mergeServiceFiles()
+    append("$projectDir/README.md")
 }
 
 run {
