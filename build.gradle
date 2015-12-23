@@ -30,7 +30,6 @@ compileJava {
 
 shadowJar {
     mergeServiceFiles()
-    append("$projectDir/README.md")
 }
 
 run {
