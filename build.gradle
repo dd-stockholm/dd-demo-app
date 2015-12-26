@@ -10,14 +10,16 @@ repositories {
     mavenCentral()
 }
 
-project.ext {
+ext {
     dropwizardVersion = "0.9.1"
+    dropwizardModulesVersion = '0.9.0-1'
 }
 
 dependencies {
     compile "org.slf4j:slf4j-api:1.7.12"
     compile "io.dropwizard:dropwizard-core:$dropwizardVersion"
     compile "io.dropwizard:dropwizard-assets:$dropwizardVersion"
+    compile "io.dropwizard.modules:dropwizard-java8:$dropwizardModulesVersion"
     testCompile "junit:junit:4.12"
 }
 

@@ -2,6 +2,7 @@ package org.dd.demoapp;
 
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.java8.Java8Bundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.dd.demoapp.config.AppConfig;
@@ -15,6 +16,7 @@ public class App extends Application<AppConfig> {
 
     @Override
     public void initialize(Bootstrap<AppConfig> bootstrap) {
+        bootstrap.addBundle(new Java8Bundle());
         bootstrap.addBundle(new AssetsBundle("/angularjs/app", "/", "index.html"));
     }
 
