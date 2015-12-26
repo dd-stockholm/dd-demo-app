@@ -10,6 +10,11 @@ repositories {
     mavenCentral()
 }
 
+version = '0.1.0'
+mainClassName = 'org.dd.demoapp.App'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
 ext {
     dropwizardVersion = "0.9.1"
     dropwizardModulesVersion = '0.9.0-1'
