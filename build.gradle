@@ -26,13 +26,7 @@ dependencies {
     compile "io.dropwizard:dropwizard-assets:$dropwizardVersion"
     compile "io.dropwizard.modules:dropwizard-java8:$dropwizardModulesVersion"
     testCompile "junit:junit:4.12"
-}
-
-version = '0.1.0'
-mainClassName = 'org.dd.demoapp.App'
-
-compileJava {
-  sourceCompatibility = '1.8'
+    testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
 }
 
 shadowJar {
