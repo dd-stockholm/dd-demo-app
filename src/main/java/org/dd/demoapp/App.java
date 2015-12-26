@@ -5,10 +5,7 @@ import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.dd.demoapp.config.AppConfig;
-import org.dd.demoapp.hello.HelloResource;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 public class App extends Application<AppConfig> {
 
@@ -27,21 +24,17 @@ public class App extends Application<AppConfig> {
     }
 
     private void registerResources(Environment environment) {
-        for (Object resource : resources()) {
-            environment.jersey().register(resource);
-        }
+        environment.jersey().register(new AbstractBinder() {
+            @Override
+            protected void configure() {
+
+            }
+        });
+        environment.jersey().getResourceConfig().packages(true, "org.dd.demoapp");
     }
 
     @Override
     public String getName() {
         return "DD Demo App";
-    }
-
-    private List<Object> resources() {
-        ArrayList<Object> resources = new ArrayList<>();
-
-        resources.add(new HelloResource());
-
-        return resources;
     }
 }
