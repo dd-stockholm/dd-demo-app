@@ -20,11 +20,19 @@ ext {
     dropwizardModulesVersion = '0.9.0-1'
 }
 
+configurations {
+    quasar
+}
+
 dependencies {
     compile "org.slf4j:slf4j-api:1.7.12"
+    compile "co.paralleluniverse:quasar-core:0.7.3:jdk8"
+    quasar "co.paralleluniverse:quasar-core:0.7.3:jdk8@jar"
+    compile "co.paralleluniverse:comsat-dropwizard:0.5.0"
     compile "io.dropwizard:dropwizard-core:$dropwizardVersion"
     compile "io.dropwizard:dropwizard-assets:$dropwizardVersion"
     compile "io.dropwizard.modules:dropwizard-java8:$dropwizardModulesVersion"
+
     testCompile "junit:junit:4.12"
     testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
 }
@@ -32,6 +40,14 @@ dependencies {
 shadowJar {
     mergeServiceFiles()
 }
+
+tasks.withType(Test) {
+    jvmArgs "-javaagent:${configurations.quasar.singleFile}"
+}
+
+applicationDefaultJvmArgs = [
+        "-javaagent:${configurations.quasar.singleFile}"
+]
 
 run {
     args 'server', 'app-config.yml'

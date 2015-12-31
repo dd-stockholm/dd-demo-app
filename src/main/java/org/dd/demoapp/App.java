@@ -1,6 +1,6 @@
 package org.dd.demoapp;
 
-import io.dropwizard.Application;
+import co.paralleluniverse.fibers.dropwizard.FiberApplication;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.java8.Java8Bundle;
 import io.dropwizard.setup.Bootstrap;
@@ -8,7 +8,7 @@ import io.dropwizard.setup.Environment;
 import org.dd.demoapp.config.AppConfig;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
-public class App extends Application<AppConfig> {
+public class App extends FiberApplication<AppConfig> {
 
     public static void main(String[] args) throws Exception {
         new App().run(args);
@@ -21,7 +21,7 @@ public class App extends Application<AppConfig> {
     }
 
     @Override
-    public void run(AppConfig configuration, Environment environment) throws Exception {
+    public void fiberRun(AppConfig configuration, Environment environment) throws Exception {
         registerResources(environment);
     }
 

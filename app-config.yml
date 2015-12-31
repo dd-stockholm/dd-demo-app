@@ -1,2 +1,7 @@
 server:
   rootPath: /api/
+  maxThreads: 200
+  minThreads: 200
+  maxQueuedRequests: 9999
+  requestLog:
+    appenders: []
