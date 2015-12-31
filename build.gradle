@@ -49,6 +49,9 @@ applicationDefaultJvmArgs = [
         "-javaagent:${configurations.quasar.singleFile}"
 ]
 
+//System property to verify that @Suspend and throw SuspendExecution is properly set wherever they are needed
+//co.paralleluniverse.fibers.verifyInstrumentation=true
+
 run {
     args 'server', 'app-config.yml'
 }
