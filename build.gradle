@@ -2,6 +2,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.2'
 }
 
 repositories {
@@ -9,16 +10,30 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.12'
-    compile 'com.sparkjava:spark-core:2.3'
-    testCompile 'junit:junit:4.12'
+version = '0.1.0'
+mainClassName = 'org.dd.demoapp.App'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+ext {
+    dropwizardVersion = "0.9.1"
+    dropwizardModulesVersion = '0.9.0-1'
 }
 
-version = '0.1.0'
-mainClassName = 'HelloWorld'
+dependencies {
+    compile "org.slf4j:slf4j-api:1.7.12"
+    compile "io.dropwizard:dropwizard-core:$dropwizardVersion"
+    compile "io.dropwizard:dropwizard-assets:$dropwizardVersion"
+    compile "io.dropwizard.modules:dropwizard-java8:$dropwizardModulesVersion"
+    testCompile "junit:junit:4.12"
+    testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
+}
 
-compileJava {
-  sourceCompatibility = '1.8'
+shadowJar {
+    mergeServiceFiles()
+}
+
+run {
+    args 'server', 'app-config.yml'
 }
 
