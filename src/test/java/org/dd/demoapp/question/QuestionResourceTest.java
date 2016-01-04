@@ -55,24 +55,24 @@ public class QuestionResourceTest implements TestDefaults {
     }
 
     private static class QuestionBuilder {
-        private Question question = new Question("123", "A question one might ask!", "2016-03-20 23:59:00.0");
+        private Question question = Question.newInstance("123", "A question one might ask!", "2016-03-20 23:59:00.0");
 
         private QuestionBuilder id(String id) {
-            question = new Question(id, question.getQuestion(), question.getCloseTime());
+            question = Question.newInstance(id, question.getQuestion(), question.getCloseTime());
             return this;
         }
         private QuestionBuilder question(String value) {
-            question = new Question(question.getId(), value, question.getCloseTime());
+            question = Question.newInstance(question.getId(), value, question.getCloseTime());
             return this;
         }
 
         private QuestionBuilder closeTime(String closeTime) {
-            question = new Question(question.getId(), question.getQuestion(), closeTime);
+            question = Question.newInstance(question.getId(), question.getQuestion(), closeTime);
             return this;
         }
 
         private Question build() {
-            return new Question(question.getId(), question.getQuestion(), question.getCloseTime());
+            return Question.newInstance(question.getId(), question.getQuestion(), question.getCloseTime());
         }
     }
 }

@@ -11,7 +11,7 @@ public class QuestionDbMapper implements ResultSetMapper<Question> {
     @Override
     public Question map(int index, ResultSet r, StatementContext ctx) throws SQLException {
         String closeTime = r.getTimestamp("closeTime").toString();
-        return new Question(r.getString("id"), r.getString("question"), closeTime);
+        return Question.newInstance(r.getString("id"), r.getString("question"), closeTime);
     }
 
 }

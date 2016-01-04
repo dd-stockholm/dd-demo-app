@@ -1,21 +1,12 @@
 package org.dd.demoapp.question;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 
 public class Question {
 
-    private final String id;
-    private final String question;
-    private final String closeTime;
-
-    @JsonCreator
-    public Question(@JsonProperty("id") String id, @JsonProperty("question") String question, @JsonProperty("closeTime") String closeTime) {
-        this.id = id;
-        this.question = question;
-        this.closeTime = closeTime;
-    }
+    private String id;
+    private String question;
+    private String closeTime;
 
     public String getId() {
         return id;
@@ -29,6 +20,13 @@ public class Question {
         return closeTime;
     }
 
+    public static Question newInstance(String id, String question, String closeTime) {
+        Question q = new Question();
+        q.id = id;
+        q.question = question;
+        q.closeTime = closeTime;
+        return q;
+    }
 
     @Override
     public boolean equals(Object o) {
