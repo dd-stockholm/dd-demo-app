@@ -18,14 +18,14 @@
 <body>
 
 <a href="#"><img src="assets/images/logo.png" id="logo"></a>
-<div>
+<div ng-view></div>
+<div class ="nav-bottom">
   <div id="tabs" ng-controller="TabsCtrl">
-    <ul>
+    <ul class="container nav nav-pills">    
       <li ng-repeat="tab in tabs"><a href="{{tab.url}}">{{tab.title}}</a></li>
     </ul>    
     
-  </div>
-  <div ng-view></div>
+  </div>  
 </div>
 
   

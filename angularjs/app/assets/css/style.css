@@ -2,7 +2,7 @@
   width:100%;
 }
 
-label > input{
+/* label > input{
   visibility: hidden;
   position: absolute;
 }
@@ -16,16 +16,16 @@ label > input:checked + img{
 td > p{
   text-align: center;
   font-weight: bold;
-}
+} */
 
-#wrapper { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
+/* #wrapper { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
 ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0; }
 ul#tabs li { display: inline; }
 ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
 ul#tabs li a:hover { background-color: #f1f0ee; }
 ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 0.7em 0.3em 0.38em 0.3em; }
 div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
-div.tabContent.hide { display: none; }
+div.tabContent.hide { display: none; } */
 
 img {
   width: 50px;
@@ -44,7 +44,7 @@ img {
   clear: left;
 }
 
-#tabs ul {
+/* #tabs ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -57,8 +57,8 @@ img {
     padding: 5px 5px 0px 5px;
     background-color: #CCC;
     color: #696969;
-}
-#mainView {
+} */
+/* #mainView {
   border: 1px solid black;
 	clear: both;
 	padding: 0 1em;
@@ -66,4 +66,30 @@ img {
 .active {
     background-color: #FFF;
     color: #000;
+} */
+
+.nav-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: black;
+    padding: 5px 0;
+}
+.nav-bottom li + li {
+    margin-left: 0px;
+}
+.nav-bottom li a {
+    text-align: center;
+    background: black;
+    color: #ecf0f1;
+}
+#tabs li a:hover,
+#tabs li a:focus {
+    background: #8BAECD;
+    color: white;
+}
+.nav-bottom li.active a {
+    background: black;
+    color: #3498db;
 }
