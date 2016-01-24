@@ -4,6 +4,14 @@
 
     ./gradlew run
 
-Then go to the just opened port. *(see the log)*
+Then go to *http://localhost:8080/*.
 
+
+## Deploy
+
+Builds and uploads latest shadowJar to http://dd-demo-app.marianna.se/.
+
+*You must have your public ssh key on the server to be able to deploy*
+
+    ./gradlew deploy
 
