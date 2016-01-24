@@ -69,7 +69,13 @@ task deploy << {
   }
 }
 
+task runSetup << {
+    delete 'build/resources/main/app'
+}
+
 run {
+    classpath("angularjs")
     args 'server', 'app-config.yml'
 }
+run.dependsOn runSetup
 
