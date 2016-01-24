@@ -17,7 +17,7 @@ public class App extends Application<AppConfig> {
     @Override
     public void initialize(Bootstrap<AppConfig> bootstrap) {
         bootstrap.addBundle(new Java8Bundle());
-        bootstrap.addBundle(new AssetsBundle("/angularjs/app", "/", "index.html"));
+        bootstrap.addBundle(new AssetsBundle("/app", "/", "index.html"));
     }
 
     @Override
