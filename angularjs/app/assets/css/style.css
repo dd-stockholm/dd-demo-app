@@ -31,16 +31,16 @@ img {
   width: 50px;
 }
 
-#partier ul, li {
+.pageContent ul, li {
   margin: 0px;
 }
 
-#partier li {
+.pageContent li {
   list-style: none;
   float: left;
 }
 
-#partier li:nth-child(odd) {
+.pageContent li:nth-child(odd) {
   clear: left;
 }
 
@@ -59,7 +59,7 @@ img {
     color: #696969;
 }
 #mainView {
-    border: 1px solid black;
+  border: 1px solid black;
 	clear: both;
 	padding: 0 1em;
 }

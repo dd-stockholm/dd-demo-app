@@ -2,5 +2,5 @@
 
 angular.module('dd-demo-app')
     .controller('QuestionController', ['$scope', function($scope) {
-      $scope.questions = questions;
+      $scope.questions = ['question1'];
     }]);

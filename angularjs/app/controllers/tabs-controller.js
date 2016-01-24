@@ -3,10 +3,13 @@
 angular.module('dd-demo-app')
     .controller('TabsCtrl', ['$scope', function($scope) {
       $scope.tabs = [{
-        title: 'Partier',
-        url: '#/parties'
+        title: 'Delegering',
+        url: '#/delegation'
         }, {
-          title:'Frågor',
-          url: '#/questions'
+          title:'Omröstning',
+          url: '#/vote'
+        }, {
+          title:'Om oss',
+          url: '#/about'
         }]
     }]);

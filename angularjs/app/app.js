@@ -6,13 +6,17 @@ var ddDemoApp = angular.module('dd-demo-app', [
   
   ddDemoApp.config(['$routeProvider', function($routeProvider){
     $routeProvider.
-    when('/parties', {
+    when('/delegation', {
       templateUrl: 'partials/parties.html',
       controller: 'PartiesController'
     }).
-    when('/questions', {
+    when('/vote', {
       templateUrl: 'partials/questions.html',
       controller: 'QuestionController'
+    }).
+    when('/about', {
+      templateUrl: 'partials/about.html',
+      controller: 'AboutController'
     }).
     otherwise({
       redirectTo: 'index.html'
