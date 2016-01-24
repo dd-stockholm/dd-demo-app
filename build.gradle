@@ -29,6 +29,17 @@ dependencies {
     testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
 }
 
+sourceSets {
+    main {
+        java { srcDir 'src/main/java' }
+        resources { srcDirs 'src/main/resources', 'angularjs'  }
+    }
+    test {
+        java { srcDir 'src/test/java' }
+        resources { srcDir 'src/main/resources' }
+    }
+}
+
 shadowJar {
     mergeServiceFiles()
 }
