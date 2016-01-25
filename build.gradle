@@ -68,6 +68,7 @@ task deploy << {
     }
   }
 }
+deploy.dependsOn shadowJar
 
 task runSetup << {
     delete 'build/resources/main/app'
