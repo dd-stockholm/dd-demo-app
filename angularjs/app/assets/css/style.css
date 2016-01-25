@@ -4,16 +4,16 @@
   margin: auto;
 }
 
-.pageContent ul, li {
+.pageContent.parties ul, li {
   margin: 0px;
 }
 
-.pageContent li {
+.pageContent.parties li {
   list-style: none;
   float: left;
 }
 
-.pageContent li:nth-child(odd) {
+.pageContent.parties li:nth-child(odd) {
   clear: left;
 }
 
