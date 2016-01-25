@@ -3,6 +3,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '1.2.2'
+    id 'org.hidetake.ssh' version '1.1.4'
 }
 
 repositories {
@@ -33,11 +34,52 @@ dependencies {
     testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
 }
 
+sourceSets {
+    main {
+        java { srcDir 'src/main/java' }
+        resources { srcDirs 'src/main/resources', 'angularjs'  }
+    }
+    test {
+        java { srcDir 'src/test/java' }
+        resources { srcDir 'src/main/resources' }
+    }
+}
+
 shadowJar {
     mergeServiceFiles()
 }
 
+remotes {
+  webServer {
+    host = 'dd-demo-app.marianna.se'
+    user = 'demoapp'
+    agent = true
+    identity = file("${System.properties['user.home']}/.ssh/id_rsa")
+  }
+}
+
+task deploy << {
+  ssh.run {
+    session(remotes.webServer) {
+      def deployTime = java.time.ZonedDateTime.now(java.time.ZoneOffset.UTC).toString()
+      def jarFileName = "dd-demo-app-${version}-all.jar" 
+
+      execute "mkdir -p ./dd-demo-app/releases/${deployTime}/"
+      put from: "build/libs/${jarFileName}", into: "./dd-demo-app/releases/${deployTime}/${jarFileName}"
+      execute "rm ./dd-demo-app/latest.jar"
+      execute "ln -s ./releases/${deployTime}/${jarFileName} ./dd-demo-app/latest.jar"
+      execute 'sudo service dd-demo-app restart'
+    }
+  }
+}
+
+task runSetup << {
+    delete 'build/resources/main/app'
+}
+
 run {
+    classpath("angularjs")
     args 'server', 'app-config.yml'
 }
+run.dependsOn runSetup
 
