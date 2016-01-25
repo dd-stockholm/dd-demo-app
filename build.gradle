@@ -79,3 +79,8 @@ run {
 }
 run.dependsOn runSetup
 
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
