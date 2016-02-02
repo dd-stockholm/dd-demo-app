@@ -1,5 +1,9 @@
 package org.dd.demoapp;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.java8.Java8Bundle;
@@ -14,6 +18,7 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.skife.jdbi.v2.DBI;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 public class App extends Application<AppConfig> {
 
@@ -45,14 +50,23 @@ public class App extends Application<AppConfig> {
             }
         });
         environment.jersey().getResourceConfig().packages(true, "org.dd.demoapp");
+        enableMillisecondsInJsonSerialization(environment);
+    }
+
+    private void enableMillisecondsInJsonSerialization(Environment environment) {
+        // TODO consider implementing Instant conversion ourselfs since there is a bug: https://github.com/FasterXML/jackson-datatype-jsr310/issues/39
+        ObjectMapper objectMapper = environment.getObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS);
+        objectMapper.disable(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS);
     }
 
     // TODO if and when upgraded to jdbi 3, this can be a default method in the DAO
     void initDb(QuestionDAO questionDAO) {
         questionDAO.createDb();
-        questionDAO.insertRow("Ska Sverige ha ID-kontroller?", LocalDateTime.of(2015, 11, 20, 23, 59));
-        questionDAO.insertRow("Ska Sverige få ha avtal med Diktaturer?", LocalDateTime.of(2016, 3, 20, 23, 59));
-        questionDAO.insertRow("Ska Sverige utöka försvarsbudgeten med x antal kr?", LocalDateTime.of(2016, 3, 23, 23, 59));
+        questionDAO.insertRow("Ska Sverige ha ID-kontroller?", LocalDateTime.of(2015, 11, 20, 23, 59).toInstant(ZoneOffset.UTC));
+        questionDAO.insertRow("Ska Sverige få ha avtal med Diktaturer?", LocalDateTime.of(2016, 3, 20, 23, 59).toInstant(ZoneOffset.UTC));
+        questionDAO.insertRow("Ska Sverige utöka försvarsbudgeten med x antal kr?", LocalDateTime.of(2016, 3, 23, 23, 59).toInstant(ZoneOffset.UTC));
     }
 
     @Override

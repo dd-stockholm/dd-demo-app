@@ -7,8 +7,11 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import javax.ws.rs.core.GenericType;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
@@ -26,9 +29,9 @@ public class QuestionResourceTest implements TestDefaults {
 
     @Test
     public void testActiveQuestions() throws Exception {
-        LocalDateTime now = LocalDateTime.of(2016, 1, 1, 1, 1);
+        Instant now = LocalDateTime.of(2016, 1, 1, 1, 1, 1).toInstant(ZoneOffset.UTC);
         Question question1 = new QuestionBuilder().id("abc").build();
-        List<Question> questions = Arrays.asList(question1);
+        List<Question> questions = Collections.singletonList(question1);
 
         when(timeService.now()).thenReturn(now);
         when(dao.questions(now)).thenReturn(questions);
@@ -40,10 +43,11 @@ public class QuestionResourceTest implements TestDefaults {
 
     @Test
     public void testAllQuestions() throws Exception {
-        LocalDateTime now = LocalDateTime.of(1970, 1, 1, 1, 1);
+        Instant now = LocalDateTime.of(1970, 1, 1, 1, 1).toInstant(ZoneOffset.UTC);
+        Instant closeTime = LocalDateTime.of(2016, 2, 11, 23, 59, 1, 500_000_000).toInstant(ZoneOffset.UTC);
 
         Question question1 = new QuestionBuilder().question("Weirdest question ever!").build();
-        Question question2 = new QuestionBuilder().closeTime("2016-02-11 23:59:00.0").build();
+        Question question2 = new QuestionBuilder().id("q2").closeTime(closeTime).build();
         List<Question> questions = Arrays.asList(question1, question2);
 
         when(timeService.epoch()).thenReturn(now);
@@ -55,7 +59,7 @@ public class QuestionResourceTest implements TestDefaults {
     }
 
     private static class QuestionBuilder {
-        private Question question = Question.newInstance("123", "A question one might ask!", "2016-03-20 23:59:00.0");
+        private Question question = Question.newInstance("123", "A question one might ask!", Instant.EPOCH);
 
         private QuestionBuilder id(String id) {
             question = Question.newInstance(id, question.getQuestion(), question.getCloseTime());
@@ -66,7 +70,7 @@ public class QuestionResourceTest implements TestDefaults {
             return this;
         }
 
-        private QuestionBuilder closeTime(String closeTime) {
+        private QuestionBuilder closeTime(Instant closeTime) {
             question = Question.newInstance(question.getId(), question.getQuestion(), closeTime);
             return this;
         }

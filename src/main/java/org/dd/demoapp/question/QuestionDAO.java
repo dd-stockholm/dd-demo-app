@@ -7,7 +7,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 
 import javax.annotation.Resource;
 import javax.inject.Singleton;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 @Resource
@@ -19,9 +19,9 @@ public interface QuestionDAO {
     void createDb();
 
     @SqlUpdate("insert into question (question, closeTime) values (:question, :closeTime)")
-    void insertRow(@Bind("question") String question, @Bind("closeTime") LocalDateTime closeTime);
+    void insertRow(@Bind("question") String question, @Bind("closeTime") Instant closeTime);
 
     @SqlQuery("select id, question, closeTime from question where closeTime > :closeTime")
-    List<Question> questions(@Bind("closeTime") LocalDateTime closeTime);
+    List<Question> questions(@Bind("closeTime") Instant closeTime);
 
 }

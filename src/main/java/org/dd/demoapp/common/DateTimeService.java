@@ -11,12 +11,12 @@ import java.time.ZoneId;
 @Singleton
 public class DateTimeService {
 
-    public LocalDateTime now() {
-        return LocalDateTime.now();
+    public Instant now() {
+        return Instant.now();
     }
 
-    public LocalDateTime epoch() {
-        return LocalDateTime.ofInstant(Instant.EPOCH, ZoneId.of("UTC+01:00"));
+    public Instant epoch() {
+        return Instant.EPOCH;
     }
 
 }

@@ -1,12 +1,15 @@
 package org.dd.demoapp.question;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+
+import java.time.Instant;
 
 public class Question {
 
     private String id;
     private String question;
-    private String closeTime;
+    private Instant closeTime;
 
     public String getId() {
         return id;
@@ -16,11 +19,11 @@ public class Question {
         return question;
     }
 
-    public String getCloseTime() {
+    public Instant getCloseTime() {
         return closeTime;
     }
 
-    public static Question newInstance(String id, String question, String closeTime) {
+    public static Question newInstance(String id, String question, Instant closeTime) {
         Question q = new Question();
         q.id = id;
         q.question = question;
@@ -43,5 +46,14 @@ public class Question {
     @Override
     public int hashCode() {
         return Objects.hashCode(id, question, closeTime);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("question", question)
+                .add("closeTime", closeTime)
+                .toString();
     }
 }
