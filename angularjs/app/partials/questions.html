@@ -1,9 +1,9 @@
 ﻿<div id="wrapper">
   <div class="pageContent questions container">
     <h3>Aktiva frågor</h3>
-    <dl>
-      <dt ng-repeat-start="item in questionItems">{{ item.question }}</dt>
-      <dd ng-repeat-end>Röstning stänger: {{ item.closeTime | date : 'yyyy-MM-dd HH:mm' : 'UTC/GMT' }}</dd>
-    </dl>
+    <blockquote ng-repeat="item in questionItems">
+      <p>{{ item.question }}</p>
+      <sub><small class="text-right">Röstning stänger: {{ item.closeTime | date : 'yyyy-MM-dd HH:mm' : 'UTC/GMT' }}</small></sub>
+    </blockquote>
   </div>
 </div>
