@@ -1,7 +1,8 @@
 'use strict';
 
 var ddDemoApp = angular.module('dd-demo-app', [
-    'ngRoute'
+    'ngRoute',
+    'ui.bootstrap'
     ]);
   
   ddDemoApp.config(['$routeProvider', function($routeProvider){
