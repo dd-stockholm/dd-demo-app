@@ -1,7 +1,8 @@
 'use strict';
 
 var ddDemoApp = angular.module('dd-demo-app', [
-    'ngRoute'
+    'ngRoute',
+    'ui.bootstrap'
     ]);
   
   ddDemoApp.config(['$routeProvider', function($routeProvider){
@@ -12,7 +13,7 @@ var ddDemoApp = angular.module('dd-demo-app', [
     }).
     when('/vote', {
       templateUrl: 'partials/questions.html',
-      controller: 'QuestionController'
+      controller: 'QuestionsController'
     }).
     when('/about', {
       templateUrl: 'partials/about.html',

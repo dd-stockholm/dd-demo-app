@@ -1,6 +1,11 @@
 ﻿'use strict';
 
 angular.module('dd-demo-app')
-    .controller('QuestionController', ['$scope', function($scope) {
-      $scope.questions = ['question1'];
+    .controller('QuestionsController', ['$scope', 'QuestionsService', function($scope, QuestionsService) {
+        QuestionsService.active().then(function(questionItems) {
+            console.log("ctrl", questionItems);
+            $scope.questionItems = questionItems;
+        }, function(err) {
+            alert(err);
+        });
     }]);

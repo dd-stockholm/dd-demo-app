@@ -27,12 +27,15 @@ configurations {
 
 dependencies {
     compile "org.slf4j:slf4j-api:1.7.12"
+    compile "com.h2database:h2:1.4.190"
     compile "co.paralleluniverse:quasar-core:0.7.3:jdk8"
     quasar "co.paralleluniverse:quasar-core:0.7.3:jdk8@jar"
     compile "co.paralleluniverse:comsat-dropwizard:0.5.0"
     compile "io.dropwizard:dropwizard-core:$dropwizardVersion"
     compile "io.dropwizard:dropwizard-assets:$dropwizardVersion"
+    compile "io.dropwizard:dropwizard-jdbi:$dropwizardVersion"
     compile "io.dropwizard.modules:dropwizard-java8:$dropwizardModulesVersion"
+    compile "io.dropwizard.modules:dropwizard-java8-jdbi:$dropwizardModulesVersion"
 
     testCompile "junit:junit:4.12"
     testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
