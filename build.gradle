@@ -33,6 +33,7 @@ dependencies {
     testCompile "junit:junit:4.12"
     testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
     testCompile 'info.cukes:cucumber-java:1.2.4'
+    testCompile 'org.fluentlenium:fluentlenium-core:0.10.9'
 }
 
 sourceSets {

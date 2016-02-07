@@ -1,4 +1,3 @@
-@wip
 Feature: Working selenium test
     In order to be productive
     As a developer
