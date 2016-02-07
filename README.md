@@ -1,5 +1,7 @@
 # DD Demo APP
 
+[![Build Status](https://travis-ci.org/dd-stockholm/dd-demo-app.svg?branch=master)](https://travis-ci.org/dd-stockholm/dd-demo-app)
+
 ## Run locally
 
     ./gradlew run
