@@ -13,6 +13,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.dd.demoapp.common.DateTimeService;
 import org.dd.demoapp.config.AppConfig;
+import org.dd.demoapp.delegate.DelegateDAO;
 import org.dd.demoapp.question.QuestionDAO;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.skife.jdbi.v2.DBI;
@@ -43,9 +44,13 @@ public class App extends Application<AppConfig> {
             @Override
             protected void configure() {
                 QuestionDAO questionDAO = jdbi.onDemand(QuestionDAO.class);
-                initDb(questionDAO);
+                questionDAO.initDb();
+
+                DelegateDAO delegateDAO = jdbi.onDemand(DelegateDAO.class);
+                delegateDAO.initDb();
 
                 bind(questionDAO).to(QuestionDAO.class);
+                bind(delegateDAO).to(DelegateDAO.class);
                 bind(DateTimeService.class).to(DateTimeService.class);
             }
         });
@@ -62,12 +67,7 @@ public class App extends Application<AppConfig> {
     }
 
     // TODO if and when upgraded to jdbi 3, this can be a default method in the DAO
-    void initDb(QuestionDAO questionDAO) {
-        questionDAO.createDb();
-        questionDAO.insertRow("Ska Sverige ha ID-kontroller?", LocalDateTime.of(2015, 11, 20, 23, 59).toInstant(ZoneOffset.UTC));
-        questionDAO.insertRow("Ska Sverige få ha avtal med Diktaturer?", LocalDateTime.of(2016, 3, 20, 23, 59).toInstant(ZoneOffset.UTC));
-        questionDAO.insertRow("Ska Sverige utöka försvarsbudgeten med x antal kr?", LocalDateTime.of(2016, 3, 23, 23, 59).toInstant(ZoneOffset.UTC));
-    }
+
 
     @Override
     public String getName() {
