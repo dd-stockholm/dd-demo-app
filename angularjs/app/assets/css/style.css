@@ -4,17 +4,17 @@
   margin: auto;
 }
 
-.pageContent ul, li {
+.pageContent.parties ul, li {
   margin: 0 0 0 5px;
   padding: 0px;
 }
 
-.pageContent li {
+.pageContent.parties li {
   list-style: none;
   float: left;
 }
 
-.pageContent li:nth-child(odd) {
+.pageContent.parties li:nth-child(odd) {
   clear: left;
 }
 
@@ -55,4 +55,10 @@
 
 .fillPage{
   margin: 10px;
+
+.accordion-toggle:focus {
+    outline: none; /* see if we can get this to look good with non disabled accessibility */
+}
+.panel-group h4 {
+    font-size: 14px;
 }

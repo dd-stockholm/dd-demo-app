@@ -21,11 +21,22 @@ ext {
     dropwizardModulesVersion = '0.9.0-1'
 }
 
+configurations {
+    quasar
+}
+
 dependencies {
     compile "org.slf4j:slf4j-api:1.7.12"
+    compile "com.h2database:h2:1.4.190"
+    compile "co.paralleluniverse:quasar-core:0.7.3:jdk8"
+    quasar "co.paralleluniverse:quasar-core:0.7.3:jdk8@jar"
+    compile "co.paralleluniverse:comsat-dropwizard:0.5.0"
     compile "io.dropwizard:dropwizard-core:$dropwizardVersion"
     compile "io.dropwizard:dropwizard-assets:$dropwizardVersion"
+    compile "io.dropwizard:dropwizard-jdbi:$dropwizardVersion"
     compile "io.dropwizard.modules:dropwizard-java8:$dropwizardModulesVersion"
+    compile "io.dropwizard.modules:dropwizard-java8-jdbi:$dropwizardModulesVersion"
+
     testCompile "junit:junit:4.12"
     testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
 }
@@ -58,7 +69,7 @@ task deploy << {
   ssh.run {
     session(remotes.webServer) {
       def deployTime = java.time.ZonedDateTime.now(java.time.ZoneOffset.UTC).toString()
-      def jarFileName = "dd-demo-app-${version}-all.jar" 
+      def jarFileName = "dd-demo-app-${version}-all.jar"
 
       execute "mkdir -p ./dd-demo-app/releases/${deployTime}/"
       put from: "build/libs/${jarFileName}", into: "./dd-demo-app/releases/${deployTime}/${jarFileName}"
@@ -68,8 +79,31 @@ task deploy << {
     }
   }
 }
+deploy.dependsOn shadowJar
 
-run {
-    args 'server', 'app-config.yml'
+task runSetup << {
+    delete 'build/resources/main/app'
 }
 
+tasks.withType(Test) {
+    jvmArgs "-javaagent:${configurations.quasar.singleFile}"
+}
+
+applicationDefaultJvmArgs = [
+        "-javaagent:${configurations.quasar.singleFile}"
+]
+
+//System property to verify that @Suspend and throw SuspendExecution is properly set wherever they are needed
+//co.paralleluniverse.fibers.verifyInstrumentation=true
+
+run {
+    classpath("angularjs")
+    args 'server', 'app-config.yml'
+}
+run.dependsOn runSetup
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}

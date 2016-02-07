@@ -1,9 +1,14 @@
-﻿<div id="wrapper" ng-controller="QuestionController">
-  <div class="pageContent">
-    <div class="fillPage">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer convallis pellentesque sem in tincidunt. Duis sapien dolor, lacinia eu eleifend non, rutrum nec libero. Quisque id viverra leo, eget convallis erat. Donec ac eleifend mauris, sagittis pellentesque sapien. Quisque consectetur id odio nec gravida. Curabitur condimentum orci purus, vel cursus augue scelerisque et. Mauris justo est, ultricies in scelerisque vitae, consequat non ipsum. Vivamus nec eros gravida, vestibulum velit et, convallis lorem. Nunc tristique semper lacinia. Curabitur rhoncus, augue eget auctor ultricies, lacus velit fringilla massa, nec ullamcorper felis metus placerat lectus. Maecenas rutrum sapien venenatis dui hendrerit, quis consectetur risus bibendum. Curabitur sit amet erat bibendum, malesuada sem at, feugiat erat. Nunc eget urna tortor. Phasellus vel nisl quam. Nam suscipit consectetur sapien, at varius lorem lacinia at. Ut nibh lectus, consequat ac nibh a, semper tristique leo.
-    Aenean semper convallis molestie. Cras in tortor gravida, feugiat mauris eget, ultrices velit. Morbi id diam quis magna ullamcorper fermentum ac at odio. Ut dictum, sem a imperdiet volutpat, mi est bibendum purus, quis pellentesque orci metus a risus. Praesent suscipit quis nunc a consequat. Proin id iaculis libero. Fusce aliquam nisi efficitur pretium pulvinar.
-    Ut id convallis sem. Nulla a odio ut justo porta eleifend. Vivamus ultrices faucibus tortor non lobortis. Vestibulum pulvinar odio et libero tincidunt fermentum. Integer et auctor ante. Maecenas sagittis lacinia volutpat. Duis hendrerit arcu enim, nec ultricies quam pharetra sed. Cras tempus dolor eu sapien lacinia, quis rutrum metus aliquet. Aliquam erat volutpat. Mauris rutrum, velit nec placerat euismod, ipsum nulla molestie massa, eu eleifend nisl nisi vel diam. Nunc sed magna sed lorem auctor porttitor id accumsan tellus. Suspendisse ullamcorper turpis nec nunc volutpat, vel ornare magna scelerisque. Phasellus blandit, nisl quis feugiat luctus, quam justo ultricies nisl, eget tempus quam nibh aliquam urna. Praesent condimentum non ipsum nec ullamcorper. Nam euismod urna a porttitor euismod. Ut quis libero ornare sem imperdiet viverra.
-    </div>
+﻿<div id="wrapper">
+  <div class="pageContent questions container">
+    <h3>Aktiva frågor</h3>
+    <uib-accordion>
+      <uib-accordion-group is-open="status.open" ng-repeat="item in questionItems">
+        <uib-accordion-heading>
+          {{ item.question }} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+        </uib-accordion-heading>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <sub><small class="pull-right">Röstning stänger: {{ item.closeTime | date : 'yyyy-MM-dd HH:mm' : 'UTC/GMT' }}</small></sub>
+      </uib-accordion-group>
+    </uib-accordion>
   </div>
 </div>
