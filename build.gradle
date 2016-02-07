@@ -32,6 +32,8 @@ dependencies {
 
     testCompile "junit:junit:4.12"
     testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
+    testCompile 'info.cukes:cucumber-java:1.2.4'
+    testCompile 'org.fluentlenium:fluentlenium-core:0.10.9'
 }
 
 sourceSets {
@@ -87,5 +89,33 @@ run.dependsOn runSetup
 test {
     testLogging {
         events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testRuntime
+    }
+}
+
+task cucumber() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', "--tags", "~@wip", '--glue', 'cucumber.steps', 'src/test/features']
+        }
+    }
+}
+
+task cucumber_wip() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', "--tags", "@wip", '--glue', 'cucumber.steps', 'src/test/features']
+        }
     }
 }

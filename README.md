@@ -17,3 +17,11 @@ Builds and uploads latest shadowJar to http://dd-demo-app.marianna.se/.
 
     ./gradlew deploy
 
+
+## Cucumber features
+
+### Run
+
+    ./gradlew cucumber
+    ./gradlew cucumber_wip // For work in progress features
+
