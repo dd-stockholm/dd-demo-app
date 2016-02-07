@@ -13,7 +13,7 @@ import java.util.List;
 @Resource
 @Singleton
 @RegisterMapper(DelegateDbMapper.class)
-public abstract class DelegateDAO {
+public abstract class DelegateDAO2 {
 
     @SqlUpdate("create table if not exists delegate (id bigint identity, name varchar, description text, logo_url varchar, webpage_url varchar)")
     abstract void createTable();

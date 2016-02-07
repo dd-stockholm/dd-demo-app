@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 public class DelegateResourceTest implements TestDefaults {
 
-    private DelegateDAO dao = mock(DelegateDAO.class);
+    private DelegateDAO2 dao = mock(DelegateDAO2.class);
     private DelegateResource resource = new DelegateResource(dao);
 
     @Rule
