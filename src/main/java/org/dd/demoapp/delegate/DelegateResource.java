@@ -5,6 +5,7 @@ import org.jvnet.hk2.annotations.Service;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -22,9 +23,14 @@ public class DelegateResource {
     }
 
     @GET
-    @Path("/all")
     public List<Delegate> getDelegates() {
         return dao.getAll();
+    }
+
+    @GET
+    @Path("/{partyId}")
+    public Delegate getDelegate(@PathParam("partyId") String partyId) {
+        return dao.get(partyId);
     }
 
 }

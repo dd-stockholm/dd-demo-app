@@ -35,37 +35,61 @@ public class DelegateResourceTest implements TestDefaults {
 
         when(dao.getAll()).thenReturn(delegates);
 
-        List<Delegate> response = resources.client().target("/delegate/all").request().get(new GenericType<List<Delegate>>() {});
+        List<Delegate> response = resources.client().target("/delegate").request().get(new GenericType<List<Delegate>>() {});
 
         assertEquals(delegates, response);
     }
 
+    @Test
+    public void testGetDelegate() throws Exception {
+        Delegate delegate = new DelegateBuilder()
+                .name("MyCoolDelegate")
+                .partyId("MyCoolDelegate")
+                .description("my cool description")
+                .logoUrl("http://testurl.test")
+                .webpageUrl("http://testurl.test")
+                .build();
+
+        String id = "coolId";
+
+        when(dao.get(id)).thenReturn(delegate);
+
+        Delegate response = resources.client().target("/delegate/" + id).request().get(Delegate.class);
+
+        assertEquals(delegate, response);
+    }
+
     private class DelegateBuilder {
 
-        private Delegate inner = Delegate.newInstance("", "", "", "");
+        private Delegate inner = Delegate.newInstance("", "", "", "", "");
 
         public DelegateBuilder name(String name) {
-            inner = Delegate.newInstance(name, inner.getDescription(), inner.getLogoUrl(), inner.getWebpageUrl());
+            inner = Delegate.newInstance(name, inner.getPartyId(), inner.getDescription(), inner.getLogoUrl(), inner.getWebpageUrl());
             return this;
         }
 
         public DelegateBuilder description(String description) {
-            inner = Delegate.newInstance(inner.getName(), description, inner.getLogoUrl(), inner.getWebpageUrl());
+            inner = Delegate.newInstance(inner.getName(), inner.getPartyId(), description, inner.getLogoUrl(), inner.getWebpageUrl());
             return this;
         }
 
         public DelegateBuilder logoUrl(String logoUrl) {
-            inner = Delegate.newInstance(inner.getName(), inner.getDescription(), logoUrl, inner.getWebpageUrl());
+            inner = Delegate.newInstance(inner.getName(), inner.getPartyId(), inner.getDescription(), logoUrl, inner.getWebpageUrl());
             return this;
         }
 
         public DelegateBuilder webpageUrl(String webpageUrl) {
-            inner = Delegate.newInstance(inner.getName(), inner.getDescription(), inner.getLogoUrl(), webpageUrl);
+            inner = Delegate.newInstance(inner.getName(), inner.getPartyId(), inner.getDescription(), inner.getLogoUrl(), webpageUrl);
+            return this;
+        }
+
+        public DelegateBuilder partyId(String partyId) {
+            inner = Delegate.newInstance(inner.getName(), partyId, inner.getDescription(), inner.getLogoUrl(), inner.getWebpageUrl());
             return this;
         }
 
         public Delegate build() {
-            return Delegate.newInstance(inner.getName(), inner.getDescription(), inner.getLogoUrl(), inner.getWebpageUrl());
+            return Delegate.newInstance(inner.getName(), inner.getPartyId(), inner.getDescription(), inner.getLogoUrl(), inner.getWebpageUrl());
         }
     }
 }
