@@ -1,7 +1,36 @@
 ﻿<div id="wrapper" ng-controller="PartiesController">
   <div class="pageContent">
     <ul>      
-      <li ng-repeat="party in parties"><a href="#/parties/{{party}}"><img ng-src="/assets/images/parties/{{party}}.png"</a></li>
+      <li ng-repeat="party in parties">        
+        <div ng-switch on="party">
+          <div ng-switch-when="c">
+            <p>Centerpartiet</p>
+          </div>
+          <div ng-switch-when="m">
+            <p>Moderaterna</p>
+          </div>
+          <div ng-switch-when="sd">
+            <p>Sverigedemokraterna</p>
+          </div>
+          <div ng-switch-when="v">
+            <p>Vänsterpartiet</p>
+          </div>
+          <div ng-switch-when="l">
+            <p>Liberalerna</p>
+          </div>
+          <div ng-switch-when="s">
+            <p>Socialdemokraterna</p>
+          </div>
+          <div ng-switch-when="mp">
+            <p>Miljöpartiet</p>
+          </div>
+          <div ng-switch-when="kd">
+            <p>Kristdemokraterna</p>
+          </div>
+        </div>
+        <a href="#/delegation/{{party}}"><img ng-src="/assets/images/parties/{{party}}.png"/></a>
+      </li>
+      
     </ul>
   </div>
 </div>

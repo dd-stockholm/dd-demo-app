@@ -5,7 +5,8 @@
 }
 
 .pageContent ul, li {
-  margin: 0px;
+  margin: 0 0 0 5px;
+  padding: 0px;
 }
 
 .pageContent li {
@@ -25,24 +26,33 @@
   background: black;
   padding: 5px 0;
 }
+
 .nav-bottom li + li {
   margin-left: 0px;
 }
+
 .nav-bottom li a {
   text-align: center;
   background: black;
   color: #ecf0f1;
 }
+
 #tabs li a:hover,
 #tabs li a:focus {
   background: #8BAECD;
   color: white;
 }
+
 #tabs ul{
   margin: 0 auto;
   width:310px;
 }
+
 .nav-bottom li.active a {
   background: black;
   color: #3498db;
+}
+
+.fillPage{
+  margin: 10px;
 }
