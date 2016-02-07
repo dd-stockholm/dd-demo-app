@@ -15,4 +15,3 @@ Builds and uploads latest shadowJar to http://dd-demo-app.marianna.se/.
 
     ./gradlew deploy
 
-test
