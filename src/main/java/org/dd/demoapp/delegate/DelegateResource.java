@@ -14,10 +14,10 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class DelegateResource {
 
-    private final DelegateDAO2 dao;
+    private final DelegateDAO dao;
 
     @Inject
-    public DelegateResource(DelegateDAO2 dao) {
+    public DelegateResource(DelegateDAO dao) {
         this.dao = dao;
     }
 

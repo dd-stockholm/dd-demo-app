@@ -13,7 +13,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.dd.demoapp.common.DateTimeService;
 import org.dd.demoapp.config.AppConfig;
-import org.dd.demoapp.delegate.DelegateDAO2;
+import org.dd.demoapp.delegate.DelegateDAO;
 import org.dd.demoapp.question.QuestionDAO;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.skife.jdbi.v2.DBI;
@@ -43,11 +43,11 @@ public class App extends Application<AppConfig> {
                 QuestionDAO questionDAO = jdbi.onDemand(QuestionDAO.class);
                 questionDAO.initDb();
 
-                DelegateDAO2 delegateDAO = jdbi.onDemand(DelegateDAO2.class);
+                DelegateDAO delegateDAO = jdbi.onDemand(DelegateDAO.class);
                 delegateDAO.initDb();
 
                 bind(questionDAO).to(QuestionDAO.class);
-                bind(delegateDAO).to(DelegateDAO2.class);
+                bind(delegateDAO).to(DelegateDAO.class);
                 bind(DateTimeService.class).to(DateTimeService.class);
             }
         });
