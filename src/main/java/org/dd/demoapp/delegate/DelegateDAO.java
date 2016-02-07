@@ -15,14 +15,17 @@ import java.util.List;
 @RegisterMapper(DelegateDbMapper.class)
 public abstract class DelegateDAO {
 
-    @SqlUpdate("create table if not exists delegate (id bigint identity, name varchar, description text, logo_url varchar, webpage_url varchar)")
+    @SqlUpdate("create table if not exists delegate (id bigint identity, party_id varchar, name varchar, description text, logo_url varchar, webpage_url varchar)")
     abstract void createTable();
 
-    @SqlUpdate("insert into delegate (name, description, logo_url, webpage_url) values (:name, :description, :logo_url, :webpage_url)")
-    abstract void insertRow(@Bind("name") String name, @Bind("description") String description, @Bind("logo_url") String logoUrl, @Bind("webpage_url") String webpageUrl);
+    @SqlUpdate("insert into delegate (name, party_id, description, logo_url, webpage_url) values (:name, :party_id, :description, :logo_url, :webpage_url)")
+    abstract void insertRow(@Bind("name") String name, @Bind("party_id") String partyId, @Bind("description") String description, @Bind("logo_url") String logoUrl, @Bind("webpage_url") String webpageUrl);
 
     @SqlQuery("select * from delegate")
     abstract List<Delegate> getAll();
+
+    @SqlQuery("select * from delegate where party_id = :party_id")
+    public abstract Delegate get(@Bind("party_id") String partyId);
 
     private final String moderaternaDescription = "";
     private final String centerpartietDescription = "Alla människors lika värde och rättigheter är grunden för Centerpartiets politik. Var och en ska kunna växa som människa och ha möjlighet att förverkliga sina drömmar. Ansvar för varandra och för naturens ekosystem ska vara vägledande när samhället formas.\n" +
@@ -58,13 +61,13 @@ public abstract class DelegateDAO {
     @Transaction
     public void initDb() {
         createTable();
-        insertRow("Centerpartiet", centerpartietDescription, "/assets/images/parties/c.png", "http://www.centerpartiet.se");
-        insertRow("Kristdemokraterna", kristdemokraternaDescription, "/assets/images/parties/kd.png", "https://www.kristdemokraterna.se");
-        insertRow("Liberalerna", liberalernaDescription, "/assets/images/parties/l.png", "https://www.liberalerna.se");
-        insertRow("Miljöpartiet", miljopartietDescription, "/assets/images/parties/mp.png", "http://www.mp.se");
-        insertRow("Moderaterna", moderaternaDescription, "/assets/images/parties/m.png", "http://www.moderaterna.se");
-        insertRow("Socialdemokraterna", socialdemokraternaDescription, "/assets/images/parties/s.png", "http://www.socialdemokraterna.se");
-        insertRow("Sverigedemokraterna", sverigedemokraternaDescription, "/assets/images/parties/sd.png", "https://sd.se");
-        insertRow("Vänsterpartiet", vansterpartietDescription, "/assets/images/parties/v.png", "http://www.vansterpartiet.se");
+        insertRow("Centerpartiet", "c", centerpartietDescription, "/assets/images/parties/c.png", "http://www.centerpartiet.se");
+        insertRow("Kristdemokraterna", "kd", kristdemokraternaDescription, "/assets/images/parties/kd.png", "https://www.kristdemokraterna.se");
+        insertRow("Liberalerna", "l", liberalernaDescription, "/assets/images/parties/l.png", "https://www.liberalerna.se");
+        insertRow("Miljöpartiet", "mp", miljopartietDescription, "/assets/images/parties/mp.png", "http://www.mp.se");
+        insertRow("Moderaterna", "m", moderaternaDescription, "/assets/images/parties/m.png", "http://www.moderaterna.se");
+        insertRow("Socialdemokraterna", "s", socialdemokraternaDescription, "/assets/images/parties/s.png", "http://www.socialdemokraterna.se");
+        insertRow("Sverigedemokraterna", "sd", sverigedemokraternaDescription, "/assets/images/parties/sd.png", "https://sd.se");
+        insertRow("Vänsterpartiet", "v", vansterpartietDescription, "/assets/images/parties/v.png", "http://www.vansterpartiet.se");
     }
 }

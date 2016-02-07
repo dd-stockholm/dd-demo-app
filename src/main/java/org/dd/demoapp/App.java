@@ -63,9 +63,6 @@ public class App extends Application<AppConfig> {
         objectMapper.disable(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS);
     }
 
-    // TODO if and when upgraded to jdbi 3, this can be a default method in the DAO
-
-
     @Override
     public String getName() {
         return "DD Demo App";
