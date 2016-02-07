@@ -3,14 +3,32 @@ package org.dd.demoapp.delegate;
 public class Delegate {
 
     private String name;
+    private String description;
+    private String logoUrl;
+    private String webpageUrl;
 
     public String getName() {
         return name;
     }
 
-    public static Delegate newInstance(String name) {
+    public String getDescription() {
+        return description;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public String getWebpageUrl() {
+        return webpageUrl;
+    }
+
+    public static Delegate newInstance(String name, String description, String logoUrl, String webpageUrl) {
         Delegate delegate = new Delegate();
         delegate.name = name;
+        delegate.description = description;
+        delegate.logoUrl = logoUrl;
+        delegate.webpageUrl = webpageUrl;
         return delegate;
     }
 

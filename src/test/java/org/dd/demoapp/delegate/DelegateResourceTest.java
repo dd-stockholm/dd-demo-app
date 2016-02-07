@@ -24,7 +24,13 @@ public class DelegateResourceTest implements TestDefaults {
 
     @Test
     public void testGetDelegates() throws Exception {
-        Delegate delegate1 = new DelegateBuilder().name("MyCoolDelegate").build();
+        Delegate delegate1 = new DelegateBuilder()
+                .name("MyCoolDelegate")
+                .description("my cool description")
+                .logoUrl("http://testurl.test")
+                .webpageUrl("http://testurl.test")
+                .build();
+
         List<Delegate> delegates = Collections.singletonList(delegate1);
 
         when(dao.getAll()).thenReturn(delegates);
@@ -36,15 +42,30 @@ public class DelegateResourceTest implements TestDefaults {
 
     private class DelegateBuilder {
 
-        private String name;
-
-        public Delegate build() {
-            return Delegate.newInstance(name);
-        }
+        private Delegate inner = Delegate.newInstance("", "", "", "");
 
         public DelegateBuilder name(String name) {
-            this.name = name;
+            inner = Delegate.newInstance(name, inner.getDescription(), inner.getLogoUrl(), inner.getWebpageUrl());
             return this;
+        }
+
+        public DelegateBuilder description(String description) {
+            inner = Delegate.newInstance(inner.getName(), description, inner.getLogoUrl(), inner.getWebpageUrl());
+            return this;
+        }
+
+        public DelegateBuilder logoUrl(String logoUrl) {
+            inner = Delegate.newInstance(inner.getName(), inner.getDescription(), logoUrl, inner.getWebpageUrl());
+            return this;
+        }
+
+        public DelegateBuilder webpageUrl(String webpageUrl) {
+            inner = Delegate.newInstance(inner.getName(), inner.getDescription(), inner.getLogoUrl(), webpageUrl);
+            return this;
+        }
+
+        public Delegate build() {
+            return Delegate.newInstance(inner.getName(), inner.getDescription(), inner.getLogoUrl(), inner.getWebpageUrl());
         }
     }
 }
