@@ -15,17 +15,17 @@ import java.util.List;
 @RegisterMapper(DelegateDbMapper.class)
 public abstract class DelegateDAO {
 
-    @SqlUpdate("create table if not exists delegate (id bigint identity, party_id varchar, name varchar, description text, logo_url varchar, webpage_url varchar)")
+    @SqlUpdate("create table if not exists delegate (id bigint identity, delegate_reference varchar, name varchar, description text, logo_url varchar, webpage_url varchar)")
     abstract void createTable();
 
-    @SqlUpdate("insert into delegate (name, party_id, description, logo_url, webpage_url) values (:name, :party_id, :description, :logo_url, :webpage_url)")
-    abstract void insertRow(@Bind("name") String name, @Bind("party_id") String partyId, @Bind("description") String description, @Bind("logo_url") String logoUrl, @Bind("webpage_url") String webpageUrl);
+    @SqlUpdate("insert into delegate (name, delegate_reference, description, logo_url, webpage_url) values (:name, :delegate_reference, :description, :logo_url, :webpage_url)")
+    abstract void insertRow(@Bind("name") String name, @Bind("delegate_reference") String delegateReference, @Bind("description") String description, @Bind("logo_url") String logoUrl, @Bind("webpage_url") String webpageUrl);
 
     @SqlQuery("select * from delegate")
     abstract List<Delegate> getAll();
 
-    @SqlQuery("select * from delegate where party_id = :party_id")
-    public abstract Delegate get(@Bind("party_id") String partyId);
+    @SqlQuery("select * from delegate where delegate_reference = :delegate_reference")
+    public abstract Delegate get(@Bind("delegate_reference") String delegateReference);
 
     private final String moderaternaDescription = "";
     private final String centerpartietDescription = "Alla människors lika värde och rättigheter är grunden för Centerpartiets politik. Var och en ska kunna växa som människa och ha möjlighet att förverkliga sina drömmar. Ansvar för varandra och för naturens ekosystem ska vara vägledande när samhället formas.\n" +

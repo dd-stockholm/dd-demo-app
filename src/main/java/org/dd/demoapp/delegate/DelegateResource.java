@@ -28,9 +28,9 @@ public class DelegateResource {
     }
 
     @GET
-    @Path("/{partyId}")
-    public Delegate getDelegate(@PathParam("partyId") String partyId) {
-        return dao.get(partyId);
+    @Path("/{delegateReference}")
+    public Delegate getDelegate(@PathParam("delegateReference") String delegateReference) {
+        return dao.get(delegateReference);
     }
 
 }
