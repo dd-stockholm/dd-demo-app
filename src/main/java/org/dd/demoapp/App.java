@@ -16,6 +16,8 @@ import org.dd.demoapp.config.AppConfig;
 import org.dd.demoapp.delegate.DelegateDAO;
 import org.dd.demoapp.question.QuestionDAO;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.knowm.dropwizard.sundial.SundialBundle;
+import org.knowm.dropwizard.sundial.SundialConfiguration;
 import org.skife.jdbi.v2.DBI;
 
 public class App extends Application<AppConfig> {
@@ -29,6 +31,12 @@ public class App extends Application<AppConfig> {
         bootstrap.addBundle(new Java8Bundle());
         bootstrap.addBundle(new AssetsBundle("/app", "/", "index.html"));
         bootstrap.addBundle(new DBIExceptionsBundle());
+        bootstrap.addBundle(new SundialBundle<AppConfig>() {
+            @Override
+            public SundialConfiguration getSundialConfiguration(AppConfig cfg) {
+                return cfg.getSundialConfiguration();
+            }
+        });
     }
 
     @Override
