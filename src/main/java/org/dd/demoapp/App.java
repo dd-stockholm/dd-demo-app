@@ -13,11 +13,14 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.dd.demoapp.common.DateTimeService;
 import org.dd.demoapp.config.AppConfig;
+import org.dd.demoapp.config.managedjob.HK2ManagedJobsBundle;
 import org.dd.demoapp.delegate.DelegateDAO;
 import org.dd.demoapp.question.QuestionDAO;
+import org.dd.demoapp.riksdagen.ImportQuestionsJob;
+import org.glassfish.hk2.api.ServiceLocator;
+import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
-import org.knowm.dropwizard.sundial.SundialBundle;
-import org.knowm.dropwizard.sundial.SundialConfiguration;
+import org.glassfish.jersey.servlet.ServletProperties;
 import org.skife.jdbi.v2.DBI;
 
 public class App extends Application<AppConfig> {
@@ -31,12 +34,7 @@ public class App extends Application<AppConfig> {
         bootstrap.addBundle(new Java8Bundle());
         bootstrap.addBundle(new AssetsBundle("/app", "/", "index.html"));
         bootstrap.addBundle(new DBIExceptionsBundle());
-        bootstrap.addBundle(new SundialBundle<AppConfig>() {
-            @Override
-            public SundialConfiguration getSundialConfiguration(AppConfig cfg) {
-                return cfg.getSundialConfiguration();
-            }
-        });
+        bootstrap.addBundle(new HK2ManagedJobsBundle("org.dd.demoapp.riksdagen"));
     }
 
     @Override
@@ -45,7 +43,8 @@ public class App extends Application<AppConfig> {
         DBIFactory factory = new DBIFactory();
         DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "h2");
 
-        environment.jersey().register(new AbstractBinder() {
+        ServiceLocator locator = ServiceLocatorUtilities.bind(new AbstractBinder() {
+
             @Override
             protected void configure() {
                 QuestionDAO questionDAO = jdbi.onDemand(QuestionDAO.class);
@@ -57,10 +56,16 @@ public class App extends Application<AppConfig> {
                 bind(questionDAO).to(QuestionDAO.class);
                 bind(delegateDAO).to(DelegateDAO.class);
                 bind(DateTimeService.class).to(DateTimeService.class);
+
+                bind(ImportQuestionsJob.class).to(ImportQuestionsJob.class);
             }
         });
+
+        environment.getApplicationContext().getAttributes().setAttribute(ServletProperties.SERVICE_LOCATOR, locator);
         environment.jersey().getResourceConfig().packages(true, "org.dd.demoapp");
         enableMillisecondsInJsonSerialization(environment);
+        environment.jersey().getResourceConfig().logComponents();
+
     }
 
     private void enableMillisecondsInJsonSerialization(Environment environment) {
@@ -75,4 +80,5 @@ public class App extends Application<AppConfig> {
     public String getName() {
         return "DD Demo App";
     }
+
 }

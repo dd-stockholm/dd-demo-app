@@ -1,4 +1,3 @@
-
 plugins {
     id 'java'
     id 'application'
@@ -29,7 +28,7 @@ dependencies {
     compile "io.dropwizard:dropwizard-jdbi:$dropwizardVersion"
     compile "io.dropwizard.modules:dropwizard-java8:$dropwizardModulesVersion"
     compile "io.dropwizard.modules:dropwizard-java8-jdbi:$dropwizardModulesVersion"
-    compile "org.knowm:dropwizard-sundial:0.9.1.0"
+    compile "de.spinscale:dropwizard-jobs-core:1.0.1"
 
     testCompile "junit:junit:4.12"
     testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
