@@ -1,7 +1,6 @@
 package org.dd.demoapp.riksdagen;
 
 import de.spinscale.dropwizard.jobs.Job;
-import de.spinscale.dropwizard.jobs.annotations.On;
 import de.spinscale.dropwizard.jobs.annotations.OnApplicationStart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +18,10 @@ public class ImportQuestionsJob extends Job {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportQuestionsJob.class);
 
-    private final ImportDAO dao;
+    private final ImportDao2 dao;
 
     @Inject
-    public ImportQuestionsJob(ImportDAO dao) {
+    public ImportQuestionsJob(ImportDao2 dao) {
         this.dao = dao;
     }
 
