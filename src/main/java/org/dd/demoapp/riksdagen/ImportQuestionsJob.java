@@ -18,10 +18,10 @@ public class ImportQuestionsJob extends Job {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportQuestionsJob.class);
 
-    private final ImportDao2 dao;
+    private final ImportDAO dao;
 
     @Inject
-    public ImportQuestionsJob(ImportDao2 dao) {
+    public ImportQuestionsJob(ImportDAO dao) {
         this.dao = dao;
     }
 

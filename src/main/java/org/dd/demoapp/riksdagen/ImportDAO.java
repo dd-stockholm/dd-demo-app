@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 
 @Resource
 @Singleton
-public abstract class ImportDao2 {
+public abstract class ImportDAO {
 
     @BatchChunkSize(1000)
     @SqlBatch("insert into question (question, closeTime) values (:title, :closeTime)")
