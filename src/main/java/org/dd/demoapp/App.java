@@ -16,6 +16,7 @@ import org.dd.demoapp.config.AppConfig;
 import org.dd.demoapp.config.managedjob.HK2ManagedJobsBundle;
 import org.dd.demoapp.delegate.DelegateDAO;
 import org.dd.demoapp.question.QuestionDAO;
+import org.dd.demoapp.riksdagen.ImportDAO;
 import org.dd.demoapp.riksdagen.ImportQuestionsJob;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
@@ -53,8 +54,11 @@ public class App extends Application<AppConfig> {
                 DelegateDAO delegateDAO = jdbi.onDemand(DelegateDAO.class);
                 delegateDAO.initDb();
 
+                ImportDAO importDAO = jdbi.onDemand(ImportDAO.class);
+
                 bind(questionDAO).to(QuestionDAO.class);
                 bind(delegateDAO).to(DelegateDAO.class);
+                bind(importDAO).to(ImportDAO.class);
                 bind(DateTimeService.class).to(DateTimeService.class);
 
                 bind(ImportQuestionsJob.class).to(ImportQuestionsJob.class);
