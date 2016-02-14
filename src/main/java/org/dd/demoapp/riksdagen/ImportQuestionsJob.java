@@ -6,11 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 //@On("0 0 2 * * ?") fixme: enable when we get 'real' questions
 @OnApplicationStart
@@ -30,9 +28,9 @@ public class ImportQuestionsJob extends Job {
         LOGGER.info("Importing questions from data.riksdagen.se");
 
         List<QuestionImportItem> questionImportItems = Arrays.asList(
-            createQuestionImportItem("Ska Sverige ha ID-kontroller?", LocalDateTime.of(2015, 11, 20, 23, 59).toInstant(ZoneOffset.UTC)),
-            createQuestionImportItem("Ska Sverige få ha avtal med Diktaturer?", LocalDateTime.of(2016, 3, 20, 23, 59).toInstant(ZoneOffset.UTC)),
-            createQuestionImportItem("Ska Sverige utöka försvarsbudgeten med x antal kr?", LocalDateTime.of(2016, 3, 23, 23, 59).toInstant(ZoneOffset.UTC))
+            createQuestionImportItem("Ska Sverige ha ID-kontroller?", "2015-11-20"),
+            createQuestionImportItem("Ska Sverige få ha avtal med Diktaturer?", "2016-03-20"),
+            createQuestionImportItem("Ska Sverige utöka försvarsbudgeten med x antal kr?", "2016-03-23")
         );
 
         dao.batchInsertQuestions(questionImportItems);
@@ -40,7 +38,7 @@ public class ImportQuestionsJob extends Job {
         LOGGER.info("Import done, {} questions imported.", questionImportItems.size());
     }
 
-    private QuestionImportItem createQuestionImportItem(String title, Instant closeTime) {
-        return new QuestionImportItem(title, "", closeTime);
+    private QuestionImportItem createQuestionImportItem(String title, String closeTime) {
+        return QuestionImportItem.newFromImportData("", title, "0", Optional.empty(), Optional.of(closeTime));
     }
 }
