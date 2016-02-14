@@ -2,6 +2,7 @@ package cucumber.steps;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.fluentlenium.core.FluentAdapter;
 import static org.openqa.selenium.By.cssSelector;
 import org.openqa.selenium.NoSuchElementException;
@@ -114,6 +115,21 @@ public class CapybaraDSL {
         System.out.println("Un setting search context from css: \"" + css + "\"");
         searchContext = currentSearchContext;
     }
+    
+    public static void within(WindowHandle windowHandle, Callback callback) throws Exception {
+        // Save state
+        String currentWindowHandle = browser.getDriver().getWindowHandle();
+        SearchContext currentSearchContext = getSearchContext();
+        
+        browser.getDriver().switchTo().window(windowHandle.seleniumWindowHandle);
+        searchContext = browser.getDriver();
+        
+        callback.call();
+        
+        // Load saved state
+        browser.getDriver().switchTo().window(currentWindowHandle);
+        searchContext = currentSearchContext;
+    }
 
     public static class With {
 
@@ -137,8 +153,41 @@ public class CapybaraDSL {
     }
 
     public static void fillIn(String labelText, With with) throws Exception {
-        String labelIsFor = find("label", withText(labelText)).getAttribute("for");
-        find("#" + labelIsFor).sendKeys(with.text);
+        WebElement input = null;
+        try {
+            String labelIsFor = find("label", withText(labelText)).getAttribute("for");
+            if(labelIsFor != null) {
+                input = find("#" + labelIsFor);
+            }
+        } catch (Exception ex) {}
+        
+        if(input == null) {
+            input = first("input[name=\"" + labelText + "\"]");
+        }
+        
+        if(input == null) {
+            input = first("input#" + labelText);
+        }
+        
+        if(input == null) {
+            input = first("textarea[name=\"" + labelText + "\"]");
+        }
+        
+        if(input == null) {
+            input = first("textarea#" + labelText);
+        }
+
+        if(input != null) {
+            input.sendKeys(with.text);
+        } else {
+            throw new FindException("Could not find input or textarea with id or name set to: \"" + labelText + "\", and could not find any label with a for set and that had the text: \"" + labelText + "\"");
+        }
+    }
+    
+    public static class WindowException extends RuntimeException {
+        public WindowException(String message) {
+            super(message);
+        }
     }
 
     public static class FindException extends RuntimeException {
@@ -192,9 +241,39 @@ public class CapybaraDSL {
             throw new FindException("Could not find css:\"" + css + "\"");
         });
     }
+    
+    public static WebElement first(String css) throws Exception {
+        try {
+            return find(css);
+        } catch (Exception ex) {}
+        
+        return null;
+    }
 
     public static WithText withText(String text) {
         return new WithText(text);
     }
     
+    public static class WindowHandle {
+        String seleniumWindowHandle;
+        
+        public WindowHandle(String seleniumWindowHandle) {
+            this.seleniumWindowHandle = seleniumWindowHandle;
+        }
+    }
+    
+    public static WindowHandle windowOpenedBy(Callback callback) throws Exception {
+        Set<String> oldWindows = browser.getDriver().getWindowHandles();
+        System.out.println("oldWindows: " + oldWindows);
+        callback.call();
+        Set<String> newWindows = browser.getDriver().getWindowHandles();
+        System.out.println("newWindows: " + newWindows);
+        
+        newWindows.removeAll(oldWindows);
+        if(newWindows.size() != 1) {
+            throw new WindowException("Lambda passed to windowOpenedBy opened " + newWindows.size() + " windows instead of 1");
+        }
+        
+        return new WindowHandle(newWindows.iterator().next());
+    }
 }
