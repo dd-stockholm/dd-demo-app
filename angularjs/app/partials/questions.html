@@ -1,14 +1,12 @@
-﻿<div id="wrapper">
-  <div class="pageContent questions container">
-    <h3>Aktiva frågor</h3>
-    <uib-accordion>
-      <uib-accordion-group is-open="status.open" ng-repeat="item in questionItems">
-        <uib-accordion-heading>
-          {{ item.question }} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-        </uib-accordion-heading>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <sub><small class="pull-right">Röstning stänger: {{ item.closeTime | date : 'yyyy-MM-dd HH:mm' : 'UTC/GMT' }}</small></sub>
-      </uib-accordion-group>
-    </uib-accordion>
-  </div>
+﻿<div class="pageContent questions container">
+  <h3>Aktiva frågor</h3>
+  <uib-accordion>
+    <uib-accordion-group is-open="status.open" ng-repeat="item in questionItems">
+      <uib-accordion-heading>
+        {{ item.question }} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+      </uib-accordion-heading>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <sub><small class="pull-right">Röstning stänger: {{ item.closeTime | date : 'yyyy-MM-dd HH:mm' : 'UTC/GMT' }}</small></sub>
+    </uib-accordion-group>
+  </uib-accordion>
 </div>
