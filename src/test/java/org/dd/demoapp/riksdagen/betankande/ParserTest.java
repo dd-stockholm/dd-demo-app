@@ -2,8 +2,8 @@ package org.dd.demoapp.riksdagen.betankande;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.dd.demoapp.TestDefaults;
 import org.dd.demoapp.riksdagen.QuestionImportItem;
-import org.hamcrest.FeatureMatcher;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
-public class ParserTest {
+public class ParserTest implements TestDefaults {
 
     private Parser parser;
     private URL source;
@@ -81,15 +81,4 @@ public class ParserTest {
 
     }
 
-    private static class OptionalIsPresentMatcher<V> extends FeatureMatcher<Optional<V>, Boolean> {
-
-        public OptionalIsPresentMatcher() {
-            super(is(true), "Optional.isPresent", "Optional.isPresent");
-        }
-
-        @Override
-        protected Boolean featureValueOf(Optional<V> target) {
-            return target.isPresent();
-        }
-    }
 }
