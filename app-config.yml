@@ -1,6 +1,10 @@
 server:
   rootPath: /api/
 
+dataImport:
+  # the base url for fetching data from
+  dokumentlistaUrl: http://data.riksdagen.se/dokumentlista/
+
 database:
   # the name of your JDBC driver
   driverClass: org.h2.Driver

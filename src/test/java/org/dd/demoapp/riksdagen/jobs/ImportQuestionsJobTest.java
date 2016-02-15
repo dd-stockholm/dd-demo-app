@@ -1,5 +1,8 @@
-package org.dd.demoapp.riksdagen;
+package org.dd.demoapp.riksdagen.jobs;
 
+import org.dd.demoapp.config.ImportConfig;
+import org.dd.demoapp.riksdagen.QuestionImportItem;
+import org.dd.demoapp.riksdagen.betankande.Parser;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -18,6 +21,12 @@ public class ImportQuestionsJobTest {
     @Mock
     private ImportDAO dao;
 
+    @Mock
+    private ImportConfig config;
+
+    @Mock
+    private Parser parser;
+
     @Captor
     private ArgumentCaptor<List<QuestionImportItem>> captor;
 
@@ -28,7 +37,7 @@ public class ImportQuestionsJobTest {
 
     @Test // todo: extend this test when it uses import data
     public void testDoJob() throws Exception {
-        ImportQuestionsJob job = new ImportQuestionsJob(dao);
+        ImportQuestionsJob job = new ImportQuestionsJob(dao, config, parser);
         job.doJob();
 
         verify(dao).batchInsertQuestions(captor.capture());

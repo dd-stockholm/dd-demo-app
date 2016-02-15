@@ -17,10 +17,10 @@ public class URLBuilder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(URLBuilder.class);
     private final UriBuilder internal;
-    private final LocalDate to;
+    private final Period period;
 
-    public URLBuilder(String basePath, LocalDate to) {
-        this.to = to;
+    public URLBuilder(String basePath, Period period) {
+        this.period = period;
         internal = UriBuilder.fromPath(basePath)
             .queryParam("doktyp", "bet")
             .queryParam("from", "{from}")
@@ -30,7 +30,7 @@ public class URLBuilder {
             .queryParam("utformat", "json");
     }
 
-    public Optional<URL> asUrl(Period period) {
+    public Optional<URL> asUrl(LocalDate to) {
         LocalDate from = to.minus(period);
         try {
             return Optional.of(internal.build(from, to).toURL());

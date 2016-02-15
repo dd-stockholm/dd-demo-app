@@ -1,14 +1,10 @@
-package org.dd.demoapp.riksdagen;
+package org.dd.demoapp.riksdagen.jobs;
 
+import org.dd.demoapp.riksdagen.QuestionImportItem;
 import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.SqlBatch;
 import org.skife.jdbi.v2.sqlobject.customizers.BatchChunkSize;
 
-import javax.annotation.Resource;
-import javax.inject.Singleton;
-
-@Resource
-@Singleton
 public abstract class ImportDAO {
 
     @BatchChunkSize(1000)

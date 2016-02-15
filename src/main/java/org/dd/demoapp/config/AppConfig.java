@@ -23,4 +23,18 @@ public class AppConfig extends Configuration {
         return database;
     }
 
+    @Valid
+    @NotNull
+    private ImportConfig dataImport = new ImportConfig();
+
+    @JsonProperty("dataImport")
+    public void setDataImport(ImportConfig importConfig) {
+        this.dataImport = importConfig;
+    }
+
+    @JsonProperty("dataImport")
+    public ImportConfig getDataImport() {
+        return dataImport;
+    }
+
 }

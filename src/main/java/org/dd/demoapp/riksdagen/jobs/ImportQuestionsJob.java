@@ -1,7 +1,10 @@
-package org.dd.demoapp.riksdagen;
+package org.dd.demoapp.riksdagen.jobs;
 
 import de.spinscale.dropwizard.jobs.Job;
 import de.spinscale.dropwizard.jobs.annotations.OnApplicationStart;
+import org.dd.demoapp.config.ImportConfig;
+import org.dd.demoapp.riksdagen.QuestionImportItem;
+import org.dd.demoapp.riksdagen.betankande.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,10 +20,14 @@ public class ImportQuestionsJob extends Job {
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportQuestionsJob.class);
 
     private final ImportDAO dao;
+    private final ImportConfig config;
+    private final Parser parser;
 
     @Inject
-    public ImportQuestionsJob(ImportDAO dao) {
+    public ImportQuestionsJob(ImportDAO dao, ImportConfig config, Parser parser) {
         this.dao = dao;
+        this.config = config;
+        this.parser = parser;
     }
 
     @Override

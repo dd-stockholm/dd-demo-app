@@ -14,21 +14,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 public class Parser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Parser.class);
 
-    private final URL source;
     private final ObjectMapper mapper;
 
-    public Parser(URL source) {
-        this.source = source;
+    public Parser() {
         this.mapper = new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .registerModule(new Jdk8Module());
     }
 
-    public List<QuestionImportItem> parseQuestions() {
+    public List<QuestionImportItem> parseQuestions(URL source) {
 
         List<QuestionImportItem> rawItems = new ArrayList<>();
         try {

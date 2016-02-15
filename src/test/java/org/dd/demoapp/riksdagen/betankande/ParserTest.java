@@ -20,19 +20,17 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 public class ParserTest implements TestDefaults {
 
-    private Parser parser;
     private URL source;
 
     @Before
     public void setUp() throws Exception {
         source = getClass().getResource("/betankande.json");
-        parser = new Parser(source);
     }
 
     @Test
     public void testParseQuestions_allHaveRequiredProperties() throws Exception {
 
-        List<QuestionImportItem> items = parser.parseQuestions();
+        List<QuestionImportItem> items = new Parser().parseQuestions(source);
         assertThat(items, everyItem(
             allOf(
                 hasProperty("riksdagsId", notNullValue()),
@@ -46,7 +44,7 @@ public class ParserTest implements TestDefaults {
     @Test
     public void testParseQuestions_includeDocumentUrlWhenAvailable() throws Exception {
 
-        Optional<QuestionImportItem> item = parser.parseQuestions()
+        Optional<QuestionImportItem> item = new Parser().parseQuestions(source)
             .stream()
             .filter(q -> q.getDocumentUrl().isPresent())
             .findAny();
@@ -58,7 +56,7 @@ public class ParserTest implements TestDefaults {
     @Test
     public void testParseQuestions_includeDescriptionWhenAvailable() throws Exception {
 
-        Optional<QuestionImportItem> item = parser.parseQuestions()
+        Optional<QuestionImportItem> item = new Parser().parseQuestions(source)
             .stream()
             .filter(q -> q.getDescription().isPresent())
             .findAny();
@@ -74,7 +72,7 @@ public class ParserTest implements TestDefaults {
         String beslutsdag = rootNode.get("dokumentlista").get("dokument").get(0).get("beslutsdag").textValue();
         int beslutsDayOfMonth = LocalDate.parse(beslutsdag).getDayOfMonth();
 
-        int closeDayInMonth = parser.parseQuestions()
+        int closeDayInMonth = new Parser().parseQuestions(source)
             .get(0).getCloseTime().map(i -> LocalDateTime.ofInstant(i, ZoneId.of("UTC")).getDayOfMonth()).get();
 
         assertThat(closeDayInMonth, is(beslutsDayOfMonth +1));
