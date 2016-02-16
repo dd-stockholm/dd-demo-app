@@ -3,22 +3,22 @@ package cucumber.steps;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import org.fluentlenium.core.FluentAdapter;
 import static org.openqa.selenium.By.cssSelector;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class CapybaraDSL {
     
     
     
-    static FluentAdapter browser = StepsUtils.getBrowser();
+    static WebDriver driver = StepsUtils.getBrowser();
     static SearchContext searchContext;
 
     private static SearchContext getSearchContext() {
         if(searchContext == null) {
-            searchContext = browser.getDriver();
+            searchContext = driver;
         }
 
         return searchContext;
@@ -33,7 +33,7 @@ public class CapybaraDSL {
     }
 
     public static void visit(String url) throws Exception {
-        retryFor(5, () -> browser.getDriver().navigate().to(url));
+        retryFor(5, () -> driver.navigate().to(url));
     }
 
     public static void clickButton(String text) throws Exception {
@@ -77,58 +77,88 @@ public class CapybaraDSL {
     }
 
     private static <T> T retryFor(double secondsToRetry, ReturningCallback<T> callback) throws Exception {
-        long startTime = System.currentTimeMillis();
-        Exception exception = new Exception("Should never be thrown");
-        while(startTime + (secondsToRetry * 1000) > System.currentTimeMillis()) {
-            try {
-                return callback.call();
-            } catch (Exception ex) {
-                exception = ex;
-            }
-            Thread.sleep(100);
+        
+        if(inRetry.get() == null) {
+            inRetry.set(false);
         }
+        
+        if(inRetry.get()) {
+            return callback.call();
+        } else {
+            try {
+                long startTime = System.currentTimeMillis();
+                Exception exception = new Exception("Should never be thrown");
+                while(startTime + (secondsToRetry * 1000) > System.currentTimeMillis()) {
+                    try {
+                        return callback.call();
+                    } catch (Exception ex) {
+                        exception = ex;
+                    }
+                    Thread.sleep(100);
+                }
 
-        throw exception;
+                throw exception;
+            } finally {
+                inRetry.set(false);
+            }
+        }
     }
 
+    private static final ThreadLocal<Boolean> inRetry = new ThreadLocal();
+    
     private static void retryFor(double secondsToRetry, Callback callback) throws Exception {
-        long startTime = System.currentTimeMillis();
-        Exception exception = new Exception("Should never be thrown");
-        while(startTime + (secondsToRetry * 1000) > System.currentTimeMillis()) {
-            try {
-                callback.call();
-                return;
-            } catch (Exception ex) {
-                exception = ex;
-            }
-            Thread.sleep(100);
+        
+        if(inRetry.get() == null) {
+            inRetry.set(false);
         }
-
-        throw exception;
+        
+        if(inRetry.get()) {
+            callback.call();
+        } else {
+            try {
+                inRetry.set(true);
+                long startTime = System.currentTimeMillis();
+                Exception exception = new Exception("Should never be thrown");
+                while(startTime + (secondsToRetry * 1000) > System.currentTimeMillis()) {
+                    try {
+                        callback.call();
+                        return;
+                    } catch (Exception ex) {
+                        exception = ex;
+                    }
+                    Thread.sleep(100);
+                }
+                
+                throw exception;
+            } finally {
+                inRetry.set(false);
+            }
+        }
     }
 
     public static void within(String css, Callback callback) throws Exception {
         SearchContext currentSearchContext = getSearchContext();
         searchContext = retryFor(5, () -> { return currentSearchContext.findElement(cssSelector(css)); });
-        System.out.println("Setting search context to css: \"" + css + "\"");
         callback.call();
-        System.out.println("Un setting search context from css: \"" + css + "\"");
         searchContext = currentSearchContext;
     }
     
     public static void within(WindowHandle windowHandle, Callback callback) throws Exception {
         // Save state
-        String currentWindowHandle = browser.getDriver().getWindowHandle();
+        String currentWindowHandle = driver.getWindowHandle();
         SearchContext currentSearchContext = getSearchContext();
         
-        browser.getDriver().switchTo().window(windowHandle.seleniumWindowHandle);
-        searchContext = browser.getDriver();
-        
-        callback.call();
-        
-        // Load saved state
-        browser.getDriver().switchTo().window(currentWindowHandle);
-        searchContext = currentSearchContext;
+        // Switch window
+        driver.switchTo().window(windowHandle.seleniumWindowHandle);
+        searchContext = driver;
+    
+        try {
+            callback.call();
+        } finally {
+            // Switch back and load state
+            driver.switchTo().window(currentWindowHandle);
+            searchContext = currentSearchContext;
+        }
     }
 
     public static class With {
@@ -153,35 +183,37 @@ public class CapybaraDSL {
     }
 
     public static void fillIn(String labelText, With with) throws Exception {
-        WebElement input = null;
-        try {
-            String labelIsFor = find("label", withText(labelText)).getAttribute("for");
-            if(labelIsFor != null) {
-                input = find("#" + labelIsFor);
-            }
-        } catch (Exception ex) {}
-        
-        if(input == null) {
-            input = first("input[name=\"" + labelText + "\"]");
-        }
-        
-        if(input == null) {
-            input = first("input#" + labelText);
-        }
-        
-        if(input == null) {
-            input = first("textarea[name=\"" + labelText + "\"]");
-        }
-        
-        if(input == null) {
-            input = first("textarea#" + labelText);
-        }
+        retryFor(5, () -> {
+            WebElement input = null;
+            try {
+                String labelIsFor = find("label", withText(labelText)).getAttribute("for");
+                if(labelIsFor != null) {
+                    input = find("#" + labelIsFor);
+                }
+            } catch (Exception ex) {}
 
-        if(input != null) {
-            input.sendKeys(with.text);
-        } else {
-            throw new FindException("Could not find input or textarea with id or name set to: \"" + labelText + "\", and could not find any label with a for set and that had the text: \"" + labelText + "\"");
-        }
+            if(input == null) {
+                input = first("input[name=\"" + labelText + "\"]");
+            }
+
+            if(input == null) {
+                input = first("input#" + labelText);
+            }
+
+            if(input == null) {
+                input = first("textarea[name=\"" + labelText + "\"]");
+            }
+
+            if(input == null) {
+                input = first("textarea#" + labelText);
+            }
+
+            if(input != null) {
+                input.sendKeys(with.text);
+            } else {
+                throw new FindException("Could not find input or textarea with id or name set to: \"" + labelText + "\", and could not find any label with a for set and that had the text: \"" + labelText + "\"");
+            }
+        });
     }
     
     public static class WindowException extends RuntimeException {
@@ -263,11 +295,9 @@ public class CapybaraDSL {
     }
     
     public static WindowHandle windowOpenedBy(Callback callback) throws Exception {
-        Set<String> oldWindows = browser.getDriver().getWindowHandles();
-        System.out.println("oldWindows: " + oldWindows);
+        Set<String> oldWindows = driver.getWindowHandles();
         callback.call();
-        Set<String> newWindows = browser.getDriver().getWindowHandles();
-        System.out.println("newWindows: " + newWindows);
+        Set<String> newWindows = driver.getWindowHandles();
         
         newWindows.removeAll(oldWindows);
         if(newWindows.size() != 1) {
