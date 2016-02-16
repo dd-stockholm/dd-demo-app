@@ -1,6 +1,8 @@
-package org.dd.demoapp.riksdagen.jobs;
+package org.dd.demoapp.riksdagen;
 
 import org.dd.demoapp.config.ImportConfig;
+import org.dd.demoapp.riksdagen.ImportDAO;
+import org.dd.demoapp.riksdagen.ImportQuestionsJob;
 import org.dd.demoapp.riksdagen.QuestionImportItem;
 import org.dd.demoapp.riksdagen.betankande.Parser;
 import org.junit.Before;

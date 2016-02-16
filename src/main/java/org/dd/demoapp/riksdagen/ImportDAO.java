@@ -1,6 +1,5 @@
-package org.dd.demoapp.riksdagen.jobs;
+package org.dd.demoapp.riksdagen;
 
-import org.dd.demoapp.riksdagen.QuestionImportItem;
 import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.SqlBatch;
 import org.skife.jdbi.v2.sqlobject.customizers.BatchChunkSize;

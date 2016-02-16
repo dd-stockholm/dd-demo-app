@@ -37,6 +37,12 @@ dependencies {
     testCompile 'org.fluentlenium:fluentlenium-core:0.10.9'
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'org.reflections:reflections:0.9.10' // force newer dependency until next version of dropwizard-jobs-core gets out to support scanning java 8 classes.
+    }
+}
+
 sourceSets {
     main {
         java { srcDir 'src/main/java' }

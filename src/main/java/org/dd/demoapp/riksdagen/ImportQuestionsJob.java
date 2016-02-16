@@ -1,9 +1,8 @@
-package org.dd.demoapp.riksdagen.jobs;
+package org.dd.demoapp.riksdagen;
 
 import de.spinscale.dropwizard.jobs.Job;
 import de.spinscale.dropwizard.jobs.annotations.OnApplicationStart;
 import org.dd.demoapp.config.ImportConfig;
-import org.dd.demoapp.riksdagen.QuestionImportItem;
 import org.dd.demoapp.riksdagen.betankande.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +40,9 @@ public class ImportQuestionsJob extends Job {
         );
 
         dao.batchInsertQuestions(questionImportItems);
+
+        Optional<String> testJava8support = Optional.of("testJava8support");
+        testJava8support.ifPresent(t -> LOGGER.info("HEY! we got Java 8 support!"));
 
         LOGGER.info("Import done, {} questions imported.", questionImportItems.size());
     }

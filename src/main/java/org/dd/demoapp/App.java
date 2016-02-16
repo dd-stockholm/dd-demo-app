@@ -17,8 +17,8 @@ import org.dd.demoapp.config.ImportConfig;
 import org.dd.demoapp.config.managedjob.HK2ManagedJobsBundle;
 import org.dd.demoapp.delegate.DelegateDAO;
 import org.dd.demoapp.question.QuestionDAO;
-import org.dd.demoapp.riksdagen.jobs.ImportDAO;
-import org.dd.demoapp.riksdagen.jobs.ImportQuestionsJob;
+import org.dd.demoapp.riksdagen.ImportDAO;
+import org.dd.demoapp.riksdagen.ImportQuestionsJob;
 import org.dd.demoapp.riksdagen.betankande.Parser;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
@@ -39,7 +39,7 @@ public class App extends Application<AppConfig> {
         bootstrap.addBundle(new Java8Bundle());
         bootstrap.addBundle(new AssetsBundle("/app", "/", "index.html"));
         bootstrap.addBundle(new DBIExceptionsBundle());
-        bootstrap.addBundle(new HK2ManagedJobsBundle("org.dd.demoapp.riksdagen.jobs"));
+        bootstrap.addBundle(new HK2ManagedJobsBundle("org.dd.demoapp.riksdagen"));
     }
 
     @Override
