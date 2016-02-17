@@ -48,6 +48,6 @@ public class ImportQuestionsJob extends Job {
     }
 
     private QuestionImportItem createQuestionImportItem(String title, String closeTime) {
-        return QuestionImportItem.newFromImportData("", title, "0", Optional.empty(), Optional.of(closeTime), Optional.empty());
+        return QuestionImportItem.newFromImportData("", title, "0", Optional.of(closeTime), Optional.empty(), Optional.empty());
     }
 }
