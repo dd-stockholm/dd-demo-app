@@ -2,13 +2,15 @@ package org.dd.demoapp.riksdagen;
 
 import de.spinscale.dropwizard.jobs.Job;
 import de.spinscale.dropwizard.jobs.annotations.OnApplicationStart;
+import org.dd.demoapp.common.DateTimeService;
 import org.dd.demoapp.config.ImportConfig;
 import org.dd.demoapp.riksdagen.betankande.Parser;
+import org.dd.demoapp.riksdagen.betankande.URLBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import java.util.Arrays;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,30 +23,31 @@ public class ImportQuestionsJob extends Job {
     private final ImportDAO dao;
     private final ImportConfig config;
     private final Parser parser;
+    private final DateTimeService dateTimeService;
 
     @Inject
-    public ImportQuestionsJob(ImportDAO dao, ImportConfig config, Parser parser) {
+    public ImportQuestionsJob(ImportDAO dao, ImportConfig config, Parser parser, DateTimeService dateTimeService) {
         this.dao = dao;
         this.config = config;
         this.parser = parser;
+        this.dateTimeService = dateTimeService;
     }
 
     @Override
     public void doJob() {
         LOGGER.info("Importing questions from data.riksdagen.se");
 
-        List<QuestionImportItem> questionImportItems = Arrays.asList(
-            createQuestionImportItem("MPQ2E", "Ska Sverige ha ID-kontroller?", "2015-11-20"),
-            createQuestionImportItem("MPQ2F", "Ska Sverige få ha avtal med Diktaturer?", "2016-03-20"),
-            createQuestionImportItem("MPQ2G", "Ska Sverige utöka försvarsbudgeten med x antal kr?", "2016-03-23")
-        );
+        Optional<URL> importUrl =
+            new URLBuilder(config.getDokumentlistaUrl(), config.getPeriod()).asUrl(dateTimeService.today());
 
+        if (!importUrl.map(this::importQuestions).isPresent()) LOGGER.error("Failed to import from data.riksdagen.se!");
+    }
+
+    private int importQuestions(URL source) {
+        List<QuestionImportItem> questionImportItems = parser.parseQuestions(source);
         dao.batchInsertQuestions(questionImportItems);
-
         LOGGER.info("Import done, {} questions imported.", questionImportItems.size());
+        return questionImportItems.size();
     }
 
-    private QuestionImportItem createQuestionImportItem(String riksdagsId, String title, String closeTime) {
-        return QuestionImportItem.newFromImportData(riksdagsId, title, "0", Optional.of(closeTime), Optional.empty(), Optional.empty());
-    }
 }
