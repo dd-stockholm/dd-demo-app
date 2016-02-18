@@ -34,20 +34,17 @@ public class ImportQuestionsJob extends Job {
         LOGGER.info("Importing questions from data.riksdagen.se");
 
         List<QuestionImportItem> questionImportItems = Arrays.asList(
-            createQuestionImportItem("Ska Sverige ha ID-kontroller?", "2015-11-20"),
-            createQuestionImportItem("Ska Sverige få ha avtal med Diktaturer?", "2016-03-20"),
-            createQuestionImportItem("Ska Sverige utöka försvarsbudgeten med x antal kr?", "2016-03-23")
+            createQuestionImportItem("MPQ2E", "Ska Sverige ha ID-kontroller?", "2015-11-20"),
+            createQuestionImportItem("MPQ2F", "Ska Sverige få ha avtal med Diktaturer?", "2016-03-20"),
+            createQuestionImportItem("MPQ2G", "Ska Sverige utöka försvarsbudgeten med x antal kr?", "2016-03-23")
         );
 
         dao.batchInsertQuestions(questionImportItems);
 
-        Optional<String> testJava8support = Optional.of("testJava8support");
-        testJava8support.ifPresent(t -> LOGGER.info("HEY! we got Java 8 support!"));
-
         LOGGER.info("Import done, {} questions imported.", questionImportItems.size());
     }
 
-    private QuestionImportItem createQuestionImportItem(String title, String closeTime) {
-        return QuestionImportItem.newFromImportData("", title, "0", Optional.of(closeTime), Optional.empty(), Optional.empty());
+    private QuestionImportItem createQuestionImportItem(String riksdagsId, String title, String closeTime) {
+        return QuestionImportItem.newFromImportData(riksdagsId, title, "0", Optional.of(closeTime), Optional.empty(), Optional.empty());
     }
 }
