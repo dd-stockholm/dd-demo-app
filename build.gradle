@@ -29,6 +29,7 @@ dependencies {
     compile "io.dropwizard:dropwizard-jdbi:$dropwizardVersion"
     compile "io.dropwizard.modules:dropwizard-java8:$dropwizardModulesVersion"
     compile "io.dropwizard.modules:dropwizard-java8-jdbi:$dropwizardModulesVersion"
+    compile "io.federecio:dropwizard-swagger:0.7.0"
 
     testCompile "junit:junit:4.12"
     testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"

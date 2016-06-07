@@ -1,5 +1,7 @@
 package org.dd.demoapp.question;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 import org.dd.demoapp.common.DateTimeService;
 import org.jvnet.hk2.annotations.Service;
 
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Service
 @Path("/question")
+@Api("/question")
 @Produces(MediaType.APPLICATION_JSON)
 public class QuestionResource {
 
@@ -25,12 +28,14 @@ public class QuestionResource {
     }
 
     @GET
+    @ApiOperation(value = "lists active questions", response = Question.class, responseContainer="List")
     @Path("/active")
     public List<Question> activeQuestions() {
         return dao.questions(dateTimeService.now());
     }
 
     @GET
+    @ApiOperation(value = "lists all questions", response = Question.class, responseContainer="List")
     @Path("/all")
     public List<Question> allQuestions() {
         return dao.questions(dateTimeService.epoch());
