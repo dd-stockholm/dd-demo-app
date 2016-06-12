@@ -29,6 +29,7 @@ dependencies {
     compile "io.dropwizard.modules:dropwizard-java8:$dropwizardModulesVersion"
     compile "io.dropwizard.modules:dropwizard-java8-jdbi:$dropwizardModulesVersion"
     compile "de.spinscale:dropwizard-jobs-core:1.0.1"
+    compile "io.federecio:dropwizard-swagger:0.7.0"
 
     testCompile "junit:junit:4.12"
     testCompile "org.hamcrest:hamcrest-all:1.3"

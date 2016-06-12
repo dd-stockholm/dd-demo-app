@@ -11,6 +11,8 @@ import io.dropwizard.java8.jdbi.DBIFactory;
 import io.dropwizard.jdbi.bundles.DBIExceptionsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.dd.demoapp.common.DateTimeService;
 import org.dd.demoapp.config.AppConfig;
 import org.dd.demoapp.config.ImportConfig;
@@ -40,6 +42,12 @@ public class App extends Application<AppConfig> {
         bootstrap.addBundle(new AssetsBundle("/app", "/", "index.html"));
         bootstrap.addBundle(new DBIExceptionsBundle());
         bootstrap.addBundle(new HK2ManagedJobsBundle("org.dd.demoapp.riksdagen"));
+        bootstrap.addBundle(new SwaggerBundle<AppConfig>() {
+            @Override
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(AppConfig configuration) {
+                return configuration.swaggerBundleConfiguration;
+            }
+        });
     }
 
     @Override
