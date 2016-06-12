@@ -45,9 +45,10 @@ This should be a simple procedure with only some dependency and configuration ch
 DropWizard prints the available REST routes in the console
 The AngularJS web is then accessible on *http://localhost:8080/*.
 
-The absolute best way to figure out the current API is by running the application like this and inspect it via developer tools in your web browser.
-Since the project is not nearly done, many things change and any detailed documentation here would be have to be changed too many times.
+### Documentation by Swagger
 
+While the application is up and running you may navigate to *http://localhost:8080/api/swagger* where the API is documented and also testable.
+Great huh!? :)
 
 ### Deploy
 
