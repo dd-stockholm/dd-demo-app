@@ -7,6 +7,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.dropwizard.java8.jersey.OptionalMessageBodyWriter;
 import io.dropwizard.java8.jersey.OptionalParamFeature;
 import io.dropwizard.testing.junit.ResourceTestRule;
+import org.hamcrest.FeatureMatcher;
+
+import java.util.Optional;
+
+import static org.hamcrest.CoreMatchers.is;
 
 public interface TestDefaults {
 
@@ -19,5 +24,17 @@ public interface TestDefaults {
                 )
                 .addProvider(OptionalMessageBodyWriter.class)
                 .addProvider(OptionalParamFeature.class);
+    }
+
+    class OptionalIsPresentMatcher<V> extends FeatureMatcher<Optional<V>, Boolean> {
+
+        public OptionalIsPresentMatcher() {
+            super(is(true), "Optional.isPresent", "Optional.isPresent");
+        }
+
+        @Override
+        protected Boolean featureValueOf(Optional<V> target) {
+            return target.isPresent();
+        }
     }
 }

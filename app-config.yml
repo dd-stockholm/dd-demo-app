@@ -1,6 +1,18 @@
 server:
   rootPath: /api/
 
+dataImport:
+  # the base url for fetching data from
+  dokumentlistaUrl: http://data.riksdagen.se/dokumentlista/
+
+  # period to import from today and back. See formats at: http://docs.oracle.com/javase/8/docs/api/java/time/Period.html#parse-java.lang.CharSequence-
+  period: P3M
+
+logging:
+  level: INFO
+  #loggers:
+      #"org.skife.jdbi.v2": TRACE
+
 database:
   # the name of your JDBC driver
   driverClass: org.h2.Driver
@@ -12,7 +24,7 @@ database:
   password:
 
   # the JDBC URL
-  url: jdbc:h2:mem:mydb
+  url: jdbc:h2:mem:mydb;DB_CLOSE_DELAY=-1
 
   # any properties specific to your JDBC driver:
   properties:

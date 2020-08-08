@@ -47,7 +47,7 @@ public class QuestionResourceTest implements TestDefaults {
         Instant closeTime = LocalDateTime.of(2016, 2, 11, 23, 59, 1, 500_000_000).toInstant(ZoneOffset.UTC);
 
         Question question1 = new QuestionBuilder().question("Weirdest question ever!").build();
-        Question question2 = new QuestionBuilder().id("q2").closeTime(closeTime).build();
+        Question question2 = new QuestionBuilder().id("q2").riksdagsId("MKPLQ").closeTime(closeTime).build();
         List<Question> questions = Arrays.asList(question1, question2);
 
         when(timeService.epoch()).thenReturn(now);
@@ -59,24 +59,30 @@ public class QuestionResourceTest implements TestDefaults {
     }
 
     private static class QuestionBuilder {
-        private Question question = Question.newInstance("123", "A question one might ask!", Instant.EPOCH);
+        private Question question = Question.newInstance("123", "HAPKP", "A question one might ask!", Instant.EPOCH);
 
         private QuestionBuilder id(String id) {
-            question = Question.newInstance(id, question.getQuestion(), question.getCloseTime());
+            question = Question.newInstance(id, question.getRiksdagsId(), question.getQuestion(), question.getCloseTime());
             return this;
         }
+
+        private QuestionBuilder riksdagsId(String riksdagsId) {
+            question = Question.newInstance(question.getId(), riksdagsId, question.getQuestion(), question.getCloseTime());
+            return this;
+        }
+
         private QuestionBuilder question(String value) {
-            question = Question.newInstance(question.getId(), value, question.getCloseTime());
+            question = Question.newInstance(question.getId(), question.getRiksdagsId(), value, question.getCloseTime());
             return this;
         }
 
         private QuestionBuilder closeTime(Instant closeTime) {
-            question = Question.newInstance(question.getId(), question.getQuestion(), closeTime);
+            question = Question.newInstance(question.getId(), question.getRiksdagsId(), question.getQuestion(), closeTime);
             return this;
         }
 
         private Question build() {
-            return Question.newInstance(question.getId(), question.getQuestion(), question.getCloseTime());
+            return Question.newInstance(question.getId(), question.getRiksdagsId(), question.getQuestion(), question.getCloseTime());
         }
     }
 }

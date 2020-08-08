@@ -12,7 +12,7 @@ public class QuestionDbMapper implements ResultSetMapper<Question> {
     @Override
     public Question map(int index, ResultSet r, StatementContext ctx) throws SQLException {
         Instant closeTime = r.getTimestamp("closeTime").toInstant();
-        return Question.newInstance(r.getString("id"), r.getString("question"), closeTime);
+        return Question.newInstance(r.getString("id"), r.getString("riksdagsId"), r.getString("question"), closeTime);
     }
 
 }

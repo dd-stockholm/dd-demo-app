@@ -1,14 +1,10 @@
 package org.dd.demoapp.common;
 
-import org.jvnet.hk2.annotations.Service;
-
-import javax.inject.Singleton;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-@Service
-@Singleton
 public class DateTimeService {
 
     public Instant now() {
@@ -19,4 +15,7 @@ public class DateTimeService {
         return Instant.EPOCH;
     }
 
+    public LocalDate today() {
+        return LocalDateTime.ofInstant(now(), ZoneId.of("UTC")).toLocalDate();
+    }
 }
