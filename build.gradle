@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '1.2.2'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
     id 'org.hidetake.ssh' version '1.1.4'
 }
 
@@ -42,6 +42,10 @@ configurations.all {
     resolutionStrategy {
         force 'org.reflections:reflections:0.9.10' // force newer dependency until next version of dropwizard-jobs-core gets out to support scanning java 8 classes.
     }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
 sourceSets {
